@@ -1,0 +1,13 @@
+vbell off
+startup_message off
+autodetach on
+defscrollback 3000
+#hardstatus alwayslastline "%`%-w%{=b bw}%n %t%{-}%+w %=[%m/%d %02c]"
+hardstatus alwayslastline "%{.bW}%-w%{.rW}%n %t%{-}%+w %=%{..G}%H %{..Y}%d/%m %c"
+
+attrcolor b ".I"
+termcapinfo xterm* 'Co#256:pa#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm:is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l'
+defbce "on"
+
+bindkey "^[[C" next
+bindkey "^[[D" prev

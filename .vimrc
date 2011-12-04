@@ -1,5 +1,5 @@
 filetype off
- 
+
 set rtp+=~/dotfiles/.vim/vundle.git/
 call vundle#rc()
 
@@ -28,16 +28,51 @@ set expandtab
 set tabstop=4 
 syntax on
 "-------------------------------------------------------------------------------
+"" Color
+"-------------------------------------------------------------------------------
+if &term =~ "xterm-256color"
+	"256色表示
+	set t_Co=256
+	"シンタックスハイライトを有効にする
+	syntax on
+	"カラースキーマ
+	colorscheme railscasts 
+endif
+
+let g:hi_insert = 'highlight StatusLine guifg=darkblue guibg=darkyellow gui=none ctermfg=blue ctermbg=yellow cterm=none'
+
+if has('syntax')
+  augroup InsertHook
+    autocmd!
+    autocmd InsertEnter * call s:StatusLine('Enter')
+    autocmd InsertLeave * call s:StatusLine('Leave')
+  augroup END
+endif
+
+let s:slhlcmd = ''
+function! s:StatusLine(mode)
+  if a:mode == 'Enter'
+    silent! let s:slhlcmd = 'highlight ' . s:GetHighlight('StatusLine')
+    silent exec g:hi_insert
+  else
+    highlight clear StatusLine
+    silent exec s:slhlcmd
+  endif
+endfunction
+
+function! s:GetHighlight(hi)
+  redir => hl
+  exec 'highlight '.a:hi
+  redir END
+  let hl = substitute(hl, '[\r\n]', '', 'g')
+  let hl = substitute(hl, 'xxx', '', '')
+  return hl
+endfunction
+"-------------------------------------------------------------------------------
 " StatusLine
 "-------------------------------------------------------------------------------
 set laststatus=2
 set ruler
-
-augroup InsertHook
-    autocmd!
-    autocmd InsertEnter * highlight StatusLine guifg=#ccdc90 guibg=#2E4340 ctermfg=red
-    autocmd InsertLeave * highlight StatusLine guifg=#2E4340 guibg=#ccdc90 ctermfg=white
-augroup END
 "-------------------------------------------------------------------------------
 " Search
 "-------------------------------------------------------------------------------
@@ -47,6 +82,11 @@ set smartcase
 set autoindent
 set hlsearch
 nmap <ESC><ESC> :nohlsearch<CR><ESC>
+"-------------------------------------------------------------------------------
+"" Mouse
+"-------------------------------------------------------------------------------
+"set mouse=a
+"set ttymouse=xterm2
 "-------------------------------------------------------------------------------
 " wild
 "-------------------------------------------------------------------------------
