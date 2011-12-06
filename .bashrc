@@ -16,6 +16,5 @@ elif [ ! -S "$SSH_AUTH_SOCK" ]; then
 elif [ ! -L "$SSH_AUTH_SOCK" ]; then
   ln -snf "$SSH_AUTH_SOCK" $agent && export SSH_AUTH_SOCK=$agent
 fi
-if [ $TERM != "screen-bce" ]; then
-  screen -S main -xRR
-fi
+
+[ $STY ] || screen -rx || screen -S main -D -RR
