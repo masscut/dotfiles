@@ -5,7 +5,7 @@ if [ -f /etc/bashrc ]; then
   . /etc/bashrc
 fi
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-[[ -s "$HOME/.nvm/nvmsh" ]] && . ~/.nvm/nvm.sh
+[[ -s "$HOME/.nvm/nvm.sh" ]] && source "$HOME/.nvm/nvm.sh"
 
 mkdir -p $HOME/tmp
 agent="$HOME/tmp/.ssh-agent-`hostname`"
