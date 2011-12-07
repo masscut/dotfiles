@@ -1,6 +1,5 @@
 filetype off
 
-
 if has('vim_starting')
   set runtimepath+=~/dotfiles/neobundle.vim 
   call neobundle#rc(expand('~/.bundle'))
@@ -35,10 +34,11 @@ set tabstop=4
 if $TERM =~ "xterm-256color"
 	set t_Co=256
 	syntax on
-	"colorscheme railscasts 
+	colorscheme wombat
+	"colorscheme molokai
 endif
 
-let g:hi_insert = 'highlight StatusLine guifg=darkblue guibg=darkyellow gui=none ctermfg=blue ctermbg=yellow cterm=none'
+let g:hi_insert = 'highlight StatusLine guifg=white guibg=darkmagenta gui=none ctermfg=white ctermbg=magenta cterm=none'
 
 if has('syntax')
   augroup InsertHook
@@ -71,7 +71,9 @@ endfunction
 " StatusLine
 "-------------------------------------------------------------------------------
 set laststatus=2
+set statusline=%F%m%r%h%w\%=[TYPE=%Y]\[FORMAT=%{&ff}]\[ENC=%{&fileencoding}]\[LOW=%l/%L]
 set ruler
+highlight StatusLine guifg=white guibg=darkblue gui=none ctermfg=white ctermbg=blue cterm=none
 "-------------------------------------------------------------------------------
 " Search
 "-------------------------------------------------------------------------------
