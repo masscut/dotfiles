@@ -4,7 +4,15 @@
 if [ -f /etc/bashrc ]; then
   . /etc/bashrc
 fi
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+alias grep='grep --color=auto'
+alias fgrep='grep --color=auto'
+alias egrep='grep --color=auto'
+
+# RVM into a shell session *as a function*
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+
+# nvm
 [[ -s "$HOME/.nvm/nvm.sh" ]] && source "$HOME/.nvm/nvm.sh"
 
 mkdir -p $HOME/tmp
