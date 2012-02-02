@@ -2,12 +2,11 @@ filetype off
 
 if has('vim_starting')
   set runtimepath+=~/dotfiles/neobundle.vim 
-  call neobundle#rc(expand('~/.bundle'))
+  call neobundle#rc(expand('~/.vim/'))
 endif
 
 NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'vim-jp/vimdoc-ja'
-NeoBundle 'gmarik/vundle'
 
 filetype plugin indent on
 "-------------------------------------------------------------------------------
