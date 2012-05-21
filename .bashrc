@@ -26,3 +26,5 @@ elif [ ! -L "$SSH_AUTH_SOCK" ]; then
 fi
 
 [ $STY ] || screen -rx || screen -S main -D -RR
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
