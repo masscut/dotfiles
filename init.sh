@@ -1,7 +1,14 @@
 #/bin/sh
 PWD=`pwd`
 
-git clone https://github.com/Shougo/neobundle.vim ~/.vim/neobundle.vim.git
+# Centos
+redhat=/etc/redhat-release
+if [ -e $redhat ]; then
+  sudo yum -y install vim-enhanced
+fi
+
+git submodule init
+git submodule update
 
 ln -s $PWD/.vimrc ~/.vimrc
 ln -s $PWD/.vim ~/.vim
