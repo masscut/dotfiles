@@ -7,6 +7,7 @@ endif
 
 NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'vim-jp/vimdoc-ja'
+NeoBundle 'sudo.vim'
 
 filetype plugin indent on
 "-------------------------------------------------------------------------------
