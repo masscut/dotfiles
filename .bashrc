@@ -1,12 +1,7 @@
-# ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
-
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
 # don't put duplicate lines or lines starting with space in the history.
-# See bash(1) for more options
 HISTCONTROL=ignoreboth
 
 # append to the history file, don't overwrite it
@@ -91,10 +86,6 @@ alias l='ls -CF'
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 # Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
@@ -106,14 +97,43 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-mkdir -p $HOME/tmp
-agent="$HOME/tmp/.ssh-agent-`hostname`"
-if [ -S "$agent" ]; then
-  export SSH_AUTH_SOCK=$agent
-elif [ ! -S "$SSH_AUTH_SOCK" ]; then
-  export SSH_AUTH_SOCK=$agent
-elif [ ! -L "$SSH_AUTH_SOCK" ]; then
-  ln -snf "$SSH_AUTH_SOCK" $agent && export SSH_AUTH_SOCK=$agent
+# vim setteing
+case "`uname`" in
+    Darwin) # for MAc
+        if [ -d /Applications/MacVim.app ]; then
+            PATH="/Applications/MacVim.app/Contents/MacOS:$PATH"
+	    alias vi="mvim --remote-tab-silent"
+        fi
+        ;;
+
+    *) ;;
+esac
+
+#less
+if [ -f /usr/local/bin/src-hilite-lesspipe.sh ]; then
+    export LESS='-R'
+    export LESSOPEN='| /usr/local/bin/src-hilite-lesspipe.sh %s'
 fi
 
-[ $STY ] || screen -rx || screen -S main -D -RR
+# rbenv
+if [ -d $Home/.rbenv ]; then
+    export PATH=$HOME/.rbenv/bin:$PATH
+    eval "$(rbenv init -)"
+fi
+
+# RVM
+#if [ -d $HOME/.rvm ]; then
+#fi
+
+# screen
+#mkdir -p $HOME/tmp
+#agent="$HOME/tmp/.ssh-agent-`hostname`"
+#if [ -S "$agent" ]; then
+#    export SSH_AUTH_SOCK=$agent
+#elif [ ! -S "$SSH_AUTH_SOCK" ]; then
+#    export SSH_AUTH_SOCK=$agent
+#elif [ ! -L "$SSH_AUTH_SOCK" ]; then
+#    ln -snf "$SSH_AUTH_SOCK" $agent && export SSH_AUTH_SOCK=$agent
+#fi
+#
+#[ $STY ] || screen -rx || screen -S main -D -RR
