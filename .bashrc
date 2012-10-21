@@ -126,14 +126,14 @@ fi
 #fi
 
 # screen
-#mkdir -p $HOME/tmp
-#agent="$HOME/tmp/.ssh-agent-`hostname`"
-#if [ -S "$agent" ]; then
-#    export SSH_AUTH_SOCK=$agent
-#elif [ ! -S "$SSH_AUTH_SOCK" ]; then
-#    export SSH_AUTH_SOCK=$agent
-#elif [ ! -L "$SSH_AUTH_SOCK" ]; then
-#    ln -snf "$SSH_AUTH_SOCK" $agent && export SSH_AUTH_SOCK=$agent
-#fi
-#
-#[ $STY ] || screen -rx || screen -S main -D -RR
+mkdir -p $HOME/tmp
+agent="$HOME/tmp/.ssh-agent-`hostname`"
+if [ -S "$agent" ]; then
+    export SSH_AUTH_SOCK=$agent
+elif [ ! -S "$SSH_AUTH_SOCK" ]; then
+    export SSH_AUTH_SOCK=$agent
+elif [ ! -L "$SSH_AUTH_SOCK" ]; then
+    ln -snf "$SSH_AUTH_SOCK" $agent && export SSH_AUTH_SOCK=$agent
+fi
+
+[ $STY ] || screen -rx || screen -S main -D -RR
