@@ -126,16 +126,9 @@ if [ -f /usr/local/bin/src-hilite-lesspipe.sh ]; then
 fi
 
 # rbenv
-if [ -d $Home/.rbenv ]; then
-    export PATH=$HOME/.rbenv/bin:$PATH
-    eval "$(rbenv init -)"
-fi
-
-# rbenv
 eval "$(rbenv init -)"
 
 # screen
-
 agent="$HOME/tmp/.ssh-agent-`hostname`"
 if [ -S "$agent" ]; then
     export SSH_AUTH_SOCK=$agent
