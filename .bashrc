@@ -131,9 +131,8 @@ if [ -d $Home/.rbenv ]; then
     eval "$(rbenv init -)"
 fi
 
-# RVM
-#if [ -d $HOME/.rvm ]; then
-#fi
+# rbenv
+eval "$(rbenv init -)"
 
 # screen
 
@@ -146,4 +145,4 @@ elif [ ! -L "$SSH_AUTH_SOCK" ]; then
     ln -snf "$SSH_AUTH_SOCK" $agent && export SSH_AUTH_SOCK=$agent
 fi
 
-[ $STY ] || screen -rx || screen -S main -D -RR
+# [ $STY ] || screen -rx || screen -S main -D -RR
