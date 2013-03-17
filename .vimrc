@@ -7,6 +7,9 @@ endif
 call neobundle#rc(expand('~/.vim/bundle/'))
 
 NeoBundleFetch 'Shougo/neobundle.vim'
+ " After install, turn shell ~/.vim/bundle/vimproc, (n,g)make -f your_machines_makefile
+NeoBundle 'Shougo/vimproc'
+
 "NeoBundle 'Shougo/neocomplcache'`
 "NeoBundle 'vim-jp/vimdoc-ja'
 NeoBundle 'sudo.vim'
