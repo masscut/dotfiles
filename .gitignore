@@ -1,2 +1,3 @@
 /.vim
 !/.vim/color
+!/.vim/bundle
