@@ -1,3 +1,4 @@
 /.vim
 !/.vim/color
 !/.vim/bundle
+!/.vim/ftplugin
