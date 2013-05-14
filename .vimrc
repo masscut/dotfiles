@@ -42,7 +42,7 @@ set softtabstop=0
 if $TERM =~ "xterm-256color"
     set t_Co=256
     syntax on
-    colorscheme wombat
+    colorscheme wombat256mod
 endif
 
 let g:hi_insert = 'highlight StatusLine guifg=white guibg=darkmagenta gui=none ctermfg=white ctermbg=magenta cterm=none'
