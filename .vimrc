@@ -64,35 +64,46 @@ endfunction
 function! MyFilename()
   let fname = expand('%:t')
   return fname =~ '__Gundo' ? '' :
+    \ &filetype == 'vimshell' ? substitute(b:vimshell.current_dir,expand('~'),'~','') :
     \ ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
     \ ('' != expand('%:t') ? expand('%:t') : '[No Name]') .
     \ ('' != MyModified() ? ' ' . MyModified() : '')
 endfunction
 
 function! MyFileformat()
-  return winwidth('.') > 70 ? &fileformat : ''
+  return &filetype !~? 'vimshell' && winwidth('.') > 70 ? &fileformat : ''
 endfunction
 
 function! MyFiletype()
-  return winwidth('.') > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
+  return &filetype !~? 'vimshell' && winwidth('.') > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
 endfunction
 
 function! MyFileencoding()
-  return winwidth('.') > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
+  return &filetype !~? 'vimshell' && winwidth('.') > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
 endfunction
 
 function! MyMode()
   let fname = expand('%:t')
     return fname == '__Gundo__' ? 'Gundo' :
       \ fname == '__Gundo_Preview__' ? 'Gundo Preview' :
-      \ &ft == 'dictionary' ? 'Dictionary' :
+      \ &filetype == 'vimshell' ? 'VimShell' :
+      \ &filetype == 'dictionary' ? 'Dictionary' :
       \ winwidth('.') > 60 ? lightline#mode() : ''
 endfunction
+
+" vimshell {{{2
+NeoBundle 'Shougo/vimshell'
+let g:vimshell_interactive_update_time = 150
+let g:vimshell_prompt_expr = 'escape(fnamemodify(getcwd(), ":~").">", "\\[]()?! ")." "'
+let g:vimshell_prompt_pattern = '^\%(\f\|\\.\)\+> '
 
 " Gundo {{{ 2
 NeoBundleLazy 'sjl/gundo.vim', {'autoload': {'commands': [{'name': 'GundoToggle'}]}}
 let g:gundo_close_on_revert = 1 
 nnoremap <F5> :GundoToggle<CR>
+
+
+
 
 " neocomplete {{{2
 NeoBundle 'Shougo/neocomplete'
