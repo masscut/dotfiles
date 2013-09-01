@@ -7,108 +7,137 @@ endif
 call neobundle#rc(expand('~/.vim/bundle/'))
 
  " Let NeoBundle manage NeoBundle
- NeoBundleFetch 'Shougo/neobundle.vim'
+NeoBundleFetch 'Shougo/neobundle.vim'
 
  " After install, turn shell ~/.vim/bundle/vimproc, (n,g)make -f your_machines_makefile
 NeoBundle 'Shougo/vimproc'
 
 NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'sudo.vim'
+NeoBundle 'itchyny/lightline.vim'
+NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'scrooloose/nerdtree'
 
 filetype plugin indent on
 
- "
- " Brief help
- " :NeoBundleList          - list configured bundles
- " :NeoBundleInstall(!)    - install(update) bundles
- " :NeoBundleClean(!)      - confirm(or auto-approve) removal of unused bundles
-
  " Installation check.
- 
-NeoBundleCheck
+ NeoBundleCheck
 
-" Basics {{{
+" Ignore default configuration while editing
+" let plugin_cmdex_disable = 1
+
+" Option {{{1
 " see http://vimwiki.net/?OptionList
-set autoindent
-set autoread
+set ambiwidth=double
 set modeline
-set scrolloff=5
-set textwidth=0
+" File {{{2
+set autoread
 set nobackup
 set noswapfile
 set hidden
-set backspace=indent,eol,start
-set showcmd
-set showmode
-set number
-set showmatch
-set expandtab
-set tabstop=4
-set shiftwidth=4
-set softtabstop=0
-" }}}
-" Color {{{
+" Display {{{2
 if $TERM =~ "xterm-256color"
     set t_Co=256
-    syntax on
     colorscheme wombat256mod
 endif
+set foldcolumn=5
+set nolist
+set number
+set ruler
+set scrolloff=5
+set showcmd
+set showmode
+set title
+set wrap
+set laststatus=2
+set cmdheight=2
+set formatoptions+=mM
+" Edit {{{2
+set autoindent
+set backspace=indent,eol,start
+set expandtab
+set shiftwidth=4
+set softtabstop=0
+set showmatch
+set tabstop=4
+set textwidth=0
 
-let g:hi_insert = 'highlight StatusLine guifg=white guibg=darkmagenta gui=none ctermfg=white ctermbg=magenta cterm=none'
-
-if has('syntax')
-    augroup InsertHook
-        autocmd!
-        autocmd InsertEnter * call s:StatusLine('Enter')
-        autocmd InsertLeave * call s:StatusLine('Leave')
-    augroup END
+" Search {{{2
+if &t_Co >2 || has("gui_running")
+    syntax on
+    set hlsearch
 endif
-
-let s:slhlcmd = ''
-function! s:StatusLine(mode)
-    if a:mode == 'Enter'
-        silent! let s:slhlcmd = 'highlight ' . s:GetHighlight('StatusLine')
-        silent exec g:hi_insert
-    else
-        highlight clear StatusLine
-        silent exec s:slhlcmd
-    endif
-endfunction
-
-function! s:GetHighlight(hi)
-    redir => hl
-    exec 'highlight '.a:hi
-    redir END
-    let hl = substitute(hl, '[\r\n]', '', 'g')
-    let hl = substitute(hl, 'xxx', '', '')
-    return hl
-endfunction
-" }}}
-" StatusLine {{{
-" set laststatus=2
-" set statusline=%F%m%r%h%w\%=[TYPE=%Y]\[FORMAT=%{&ff}]\[ENC=%{&fileencoding}]\[LOW=%l/%L]
-" set ruler
-" highlight StatusLine guifg=white guibg=darkblue gui=none ctermfg=white ctermbg=blue cterm=none
-" }}}
-" Search {{{
 set hlsearch
 set incsearch
 set ignorecase
 set smartcase
 set wrapscan
 nmap <ESC><ESC> :nohlsearch<CR><ESC>
-" }}}
-" Mouse {{{
-"set mouse=a
-"set ttymouse=xterm2
-" }}}
-" wild {{{
+" Mouse {{{2
+if has('mouse')
+    set mouse=a
+    set nomousefocus
+    set ttymouse=xterm2
+    set guioptions+=a
+endif
+" wild {{{2
 set wildmenu
-set wildchar=<tab>
 set wildmode=list:full
-" }}}
+" }}}1
+" lightline.vim {{{
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'fugitive', 'filename' ] ]
+      \ },
+      \ 'component_function': {
+      \   'fugitive': 'MyFugitive',
+      \   'readonly': 'MyReadonly',
+      \   'modified': 'MyModified',
+      \   'filename': 'MyFilename'
+      \ },
+      \ 'separator': { 'left': '⮀', 'right': '⮂' },
+      \ 'subseparator': { 'left': '⮁', 'right': '⮃' }
+      \ }
 
+function! MyModified()
+  if &filetype == "help"
+    return ""
+  elseif &modified
+    return "+"
+  elseif &modifiable
+    return ""
+  else
+    return ""
+  endif
+endfunction
+
+function! MyReadonly()
+  if &filetype == "help"
+    return ""
+  elseif &readonly
+    return "⭤"
+  else
+    return ""
+  endif
+endfunction
+
+function! MyFugitive()
+  if exists("*fugitive#head")
+    let _ = fugitive#head()
+    return strlen(_) ? '⭠ '._ : ''
+  endif
+  return ''
+endfunction
+
+function! MyFilename()
+  return ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
+       \ ('' != expand('%:t') ? expand('%:t') : '[No Name]') .
+       \ ('' != MyModified() ? ' ' . MyModified() : '')
+endfunction
+
+" }}}
 " neocomplcache {{{
 "Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
 " Disable AutoComplPop.

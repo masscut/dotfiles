@@ -1,58 +1,22 @@
-"-------------------------------------------------------------------------------
-"" Window
-"-------------------------------------------------------------------------------
+" Option {{{1
+" Window {{{2
 set columns=100
 set lines=60
-"-------------------------------------------------------------------------------
-"" Color
-"-------------------------------------------------------------------------------
+set cmdheight=2
+set transparency=10
 set t_Co=256
-syntax on
 colorscheme wombat256mod
-
-let g:hi_insert = 'highlight StatusLine guifg=white guibg=darkmagenta gui=none ctermfg=white ctermbg=magenta cterm=none'
-
-if has('syntax')
-    augroup InsertHook
-        autocmd!
-        autocmd InsertEnter * call s:StatusLine('Enter')
-        autocmd InsertLeave * call s:StatusLine('Leave')
-    augroup END
-endif
-
-let s:slhlcmd = ''
-function! s:StatusLine(mode)
-    if a:mode == 'Enter'
-        silent! let s:slhlcmd = 'highlight ' . s:GetHighlight('StatusLine')
-        silent exec g:hi_insert
-    else
-        highlight clear StatusLine
-        silent exec s:slhlcmd
-    endif
-endfunction
-
-function! s:GetHighlight(hi)
-    redir => hl
-    exec 'highlight '.a:hi
-    redir END
-    let hl = substitute(hl, '[\r\n]', '', 'g')
-    let hl = substitute(hl, 'xxx', '', '')
-    return hl
-endfunction
-"-------------------------------------------------------------------------------
-"" StatusLine
-"-------------------------------------------------------------------------------
-set statusline=%F%m%r%h%w\%=[TYPE=%Y]\[FORMAT=%{&ff}]\[ENC=%{&fileencoding}]\[LOW=%l/%L]
-highlight StatusLine guifg=white guibg=darkblue gui=none ctermfg=white ctermbg=blue cterm=none
-"-------------------------------------------------------------------------------
-"" Mouse
-"-------------------------------------------------------------------------------
-set mouse=a
-set ttymouse=xterm2
-set guioptions+=a
-"-------------------------------------------------------------------------------
-"" Font
-"-------------------------------------------------------------------------------
-set guifont=Consolas:h12
+" Font {{{2
+set guifont=Consolas\ for\ Powerline:h12 
 set guifontwide=Osaka:h12
 set antialias
+" Mouse {{{2
+"set mouse=a
+"set nomousefocus
+"set ttymouse=xterm2
+"set guioptions+=a
+" }}}1
+
+" Color
+"-------------------------------------------------------------------------------
+"syntax on
