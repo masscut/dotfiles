@@ -26,7 +26,6 @@ NeoBundle 'Shougo/vimproc', {
       \    },
       \ }
 
-
 " lightline {{{2
 NeoBundle 'itchyny/lightline.vim'
 let g:lightline = {
@@ -51,16 +50,16 @@ let g:lightline = {
       \ }
 
 function! MyModified()
-  return &filetype =~ 'help' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+  return &filetype =~ 'help\|git' ? '' : &modified ? '+' : &modifiable ? '' : '-'
 endfunction
 
 function! MyReadonly()
-  return &filetype !~? 'help' && &readonly ? '⭤' : ''
+  return &filetype !~? 'help\|git' && &readonly ? '⭤' : ''
 endfunction
 
 function! MyFugitive()
   try
-    if expand('%:t') !~? 'Gundo' && exists("*fugitive#head")
+    if &filetype !~? 'git' && expand('%:t') !~? 'Gundo' && exists("*fugitive#head")
       let _ = fugitive#head()
       return strlen(_) ? '⭠ '._ : ''
     endif
@@ -71,7 +70,7 @@ endfunction
 
 function! MyFilename()
   let fname = expand('%:t')
-  return fname =~ '__Gundo' ? '' :
+  return fname =~ '__Gundo\|Gitv' ? '' :
     \ &filetype == 'vimshell' ? substitute(b:vimshell.current_dir,expand('~'),'~','') :
     \ ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
     \ ('' != expand('%:t') ? expand('%:t') : '[No Name]') .
@@ -94,6 +93,8 @@ function! MyMode()
   let fname = expand('%:t')
     return fname == '__Gundo__' ? 'Gundo' :
       \ fname == '__Gundo_Preview__' ? 'Gundo Preview' :
+      \ &filetype == 'gitv' ? 'Gitv' :
+      \ &filetype == 'git' ? 'Git' :
       \ &filetype == 'vimshell' ? 'VimShell' :
       \ &filetype == 'dictionary' ? 'Dictionary' :
       \ winwidth('.') > 60 ? lightline#mode() : ''
@@ -109,9 +110,6 @@ let g:vimshell_prompt_pattern = '^\%(\f\|\\.\)\+> '
 NeoBundleLazy 'sjl/gundo.vim', {'autoload': {'commands': [{'name': 'GundoToggle'}]}}
 let g:gundo_close_on_revert = 1 
 nnoremap <F5> :GundoToggle<CR>
-
-
-
 
 " neocomplete {{{2
 NeoBundle 'Shougo/neocomplete'
@@ -181,13 +179,16 @@ let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 
 " etc {{{2
 NeoBundle 'tpope/vim-fugitive'
+
+NeoBundle 'gregsexton/gitv'
+
 " NeoBundle 'scrooloose/nerdtree'
 
 NeoBundleLazy 'sudo.vim', {'autoload': {'commands': ['SudoRead', 'SudoWrite']}}
 
 filetype plugin indent on
 
- " Installation check.
+" Installation check.
 NeoBundleCheck
 
 " }}}1
