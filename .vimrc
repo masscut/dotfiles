@@ -1,6 +1,12 @@
 " Initialize {{{1
 set nocompatible 
 filetype off
+
+" release autogroup in MyAutoCmd
+augroup MyAutoCmd
+  autocmd!
+augroup END
+
 " Ignore default configuration while editing
 " let plugin_cmdex_disable = 1
 " }}}1
@@ -230,6 +236,7 @@ set expandtab
 set shiftwidth=4
 set softtabstop=0
 set showmatch
+set matchtime=3
 set tabstop=4
 set textwidth=0
 
@@ -255,6 +262,12 @@ endif
 set wildmenu
 set wildmode=list:full
 " }}}1
+
+" map
+" always escape / and ? in search character.
+cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
+cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
+
 " vim:set foldmethod=marker:
 " vim:set foldlevel=1:
 "
