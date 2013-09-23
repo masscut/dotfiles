@@ -280,6 +280,9 @@ nnoremap <C-h>      :<C-u>help<Space>
 nnoremap <C-h><C-h> :<C-u>help<Space><C-r><C-w><CR>
 
 " }}}1
+
+autocmd FileType help nnoremap <buffer> q <C-w>c
+
 " vim:set foldmethod=marker:
 " vim:set foldlevel=1:
 "
