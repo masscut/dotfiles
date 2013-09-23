@@ -102,9 +102,13 @@ endfunction
 
 " vimshell {{{2
 NeoBundle 'Shougo/vimshell'
-let g:vimshell_interactive_update_time = 150
-let g:vimshell_prompt_expr = 'escape(fnamemodify(getcwd(), ":~").">", "\\[]()?! ")." "'
-let g:vimshell_prompt_pattern = '^\%(\f\|\\.\)\+> '
+let s:bundle = neobundle#get('vimshell')
+function! s:bundle.hooks.on_source(bundle)
+    let g:vimshell_interactive_update_time = 150
+    let g:vimshell_prompt_expr = 'escape(fnamemodify(getcwd(), ":~").">", "\\[]()?! ")." "'
+    let g:vimshell_prompt_pattern = '^\%(\f\|\\.\)\+> '
+endfunction
+unlet s:bundle
 
 " Gundo {{{ 2
 NeoBundleLazy 'sjl/gundo.vim', {'autoload': {'commands': [{'name': 'GundoToggle'}]}}
