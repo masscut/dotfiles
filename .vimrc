@@ -204,13 +204,12 @@ NeoBundleCheck
 
 " }}}1
 " Option {{{1
-" see http://vimwiki.net/?OptionList
-set ambiwidth=double
-set modeline
 " File {{{2
-set autoread
+set modeline
 set nobackup
+set autoread
 set noswapfile
+set nowritebackup
 set hidden
 " Display {{{2
 if $TERM =~ "xterm-256color"
@@ -229,8 +228,10 @@ set wrap
 set laststatus=2
 set cmdheight=2
 set formatoptions+=mM
+set ambiwidth=double
 " Edit {{{2
 set autoindent
+set shiftround
 set backspace=indent,eol,start
 set expandtab
 set shiftwidth=4
@@ -239,7 +240,8 @@ set showmatch
 set matchtime=3
 set tabstop=4
 set textwidth=0
-
+set matchpairs& matchpairs+=<:>
+set clipboard& clipboard+=unnamed
 " Search {{{2
 if &t_Co >2 || has("gui_running")
     syntax on
@@ -250,7 +252,6 @@ set incsearch
 set ignorecase
 set smartcase
 set wrapscan
-nmap <ESC><ESC> :nohlsearch<CR><ESC>
 " Mouse {{{2
 if has('mouse')
     set mouse=a
@@ -263,11 +264,22 @@ set wildmenu
 set wildmode=list:full
 " }}}1
 
-" map
+" map {{{1
+inoremap jj <Esc>
+
+nmap <ESC><ESC> :nohlsearch<CR><ESC>
+
 " always escape / and ? in search character.
 cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
 cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
 
+nnoremap <Down> gj
+nnoremap <Up>   gk
+
+nnoremap <C-h>      :<C-u>help<Space>
+nnoremap <C-h><C-h> :<C-u>help<Space><C-r><C-w><CR>
+
+" }}}1
 " vim:set foldmethod=marker:
 " vim:set foldlevel=1:
 "
