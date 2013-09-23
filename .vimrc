@@ -124,7 +124,7 @@ function! s:hooks.on_source(bundle)
 endfunction
 unlet s:hooks
 
-nnoremap <F5> :GundoToggle<CR>
+nnoremap U :<C-u>GundoToggle<CR>
 
 " neocomplete {{{2
 if has('lua') && ( (v:version == 703 && has('patch885')) || v:version >= 704 )
