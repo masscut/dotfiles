@@ -116,7 +116,7 @@ function! s:bundle.hooks.on_source(bundle)
 endfunction
 unlet s:bundle
 
-" Gundo {{{ 2
+" Gundo {{{2
 NeoBundleLazy 'sjl/gundo.vim', {'autoload': {'commands': [{'name': 'GundoToggle'}]}}
 let s:bundle = neobundle#get_hooks("gundo.vim")
 function! s:bundle.on_source(bundle)
@@ -128,7 +128,13 @@ nnoremap <F5> :GundoToggle<CR>
 
 " neocomplete {{{2
 if has("lua")
-    NeoBundleLazy 'Shougo/neocomplete', { 'autoload' : { 'insert' : 1 } }
+    NeoBundle 'Shougo/neocomplete'
+    call neobundle#config('neocomplete.vim', {
+        \ 'lazy' : 1,
+        \ 'autoload' : {
+        \   'insert' : 1,
+        \   'commands' : 'NeoCompleteBufferMakeCache',
+        \ }})
     let g:neocomplete#enable_at_startup = 1
 endif
 
