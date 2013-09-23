@@ -202,7 +202,7 @@ unlet s:hooks
 " etc {{{2
 NeoBundle 'tpope/vim-fugitive'
 
-NeoBundle 'gregsexton/gitv'
+NeoBundleLazy 'gregsexton/gitv', {'autoload': {'commands': ['Gitv']}}
 
 " NeoBundle 'scrooloose/nerdtree'
 
