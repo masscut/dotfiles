@@ -108,21 +108,21 @@ endfunction
 
 " vimshell {{{2
 NeoBundle 'Shougo/vimshell'
-let s:bundle = neobundle#get('vimshell')
-function! s:bundle.hooks.on_source(bundle)
+let s:hooks = neobundle#get('vimshell')
+function! s:hooks.hooks.on_source(bundle)
     let g:vimshell_interactive_update_time = 150
     let g:vimshell_prompt_expr = 'escape(fnamemodify(getcwd(), ":~").">", "\\[]()?! ")." "'
     let g:vimshell_prompt_pattern = '^\%(\f\|\\.\)\+> '
 endfunction
-unlet s:bundle
+unlet s:hooks
 
 " Gundo {{{2
 NeoBundleLazy 'sjl/gundo.vim', {'autoload': {'commands': [{'name': 'GundoToggle'}]}}
-let s:bundle = neobundle#get_hooks("gundo.vim")
-function! s:bundle.on_source(bundle)
+let s:hooks = neobundle#get_hooks("gundo.vim")
+function! s:hooks.on_source(bundle)
     let g:gundo_close_on_revert = 1 
 endfunction
-unlet s:bundle
+unlet s:hooks
 
 nnoremap <F5> :GundoToggle<CR>
 
@@ -138,8 +138,8 @@ if has("lua")
     let g:neocomplete#enable_at_startup = 1
 endif
 
-let s:bundle = neobundle#get_hooks("neocomplete.vim")
-function! s:bundle.on_source(bundle)
+let s:hooks = neobundle#get_hooks("neocomplete.vim")
+function! s:hooks.on_source(bundle)
     " Use smartcase
     let g:neocomplete#enable_smart_case = 1
     " Set minimum syntax keyword length.
@@ -166,7 +166,7 @@ function! s:bundle.on_source(bundle)
     " https://github.com/c9s/perlomni.vim
     let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 endfunction
-unlet s:bundle
+unlet s:hooks
 
 " Plugin key-mappings.
 inoremap <expr><C-g>     neocomplete#undo_completion()
