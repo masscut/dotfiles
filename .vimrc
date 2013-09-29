@@ -12,7 +12,6 @@ augroup END
 " }}}1
 
 " Plugin {{{1
-" neobundle {{{2
 if has('vim_starting')
   set runtimepath+=~/.vim/bundle/neobundle.vim/ 
 endif
@@ -22,18 +21,115 @@ call neobundle#rc(expand('~/.vim/bundle/'))
  " Let NeoBundle manage NeoBundle
 NeoBundleFetch 'Shougo/neobundle.vim'
 
- " After install, turn shell ~/.vim/bundle/vimproc, (n,g)make -f your_machines_makefile
-NeoBundle 'Shougo/vimproc', {
+NeoBundle 'Shougo/vimproc'
+NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/neocomplete'
+NeoBundle 'Shougo/vimshell'
+NeoBundle 'itchyny/lightline.vim'
+NeoBundleLazy 'sjl/gundo.vim', {'autoload': {'commands': [{'name': 'GundoToggle'}]}}
+NeoBundleLazy 'thinca/vim-quickrun', { 'autoload' : {
+    \ 'mappings' : [
+    \   ['nxo', '<Plug>(quickrun)']],
+    \ }}
+NeoBundle 'tpope/vim-fugitive'
+NeoBundleLazy 'gregsexton/gitv', {'autoload': {'commands': ['Gitv']}}
+NeoBundleLazy 'sudo.vim', {'autoload': {'commands': ['SudoRead', 'SudoWrite']}}
+" NeoBundle 'scrooloose/nerdtree'
+
+call neobundle#config('vimproc', {
       \ 'build' : {
       \     'windows' : 'make -f make_mingw32.mak',
       \     'cygwin' : 'make -f make_cygwin.mak',
       \     'mac' : 'make -f make_mac.mak',
       \     'unix' : 'make -f make_unix.mak',
       \    },
-      \ }
+      \ })
 
+call neobundle#config('unite.vim',{
+      \ 'lazy' : 1,
+      \ 'autoload' : {
+      \   'commands' : [{ 'name' : 'Unite',
+      \                   'complete' : 'customlist,unite#complete_source'},
+      \                 'UniteWithCursorWord', 'UniteWithInput']
+      \ }})
+
+"if has('lua') && ( (v:version == 703 && has('patch885')) || v:version >= 704 )
+call neobundle#config('neocomplete.vim', {
+    \ 'lazy' : 1,
+    \ 'autoload' : {
+    \   'insert' : 1,
+    \   'commands' : 'NeoCompleteBufferMakeCache',
+    \ }})
+let g:neocomplete#enable_at_startup = 1
+"endif
+
+filetype plugin indent on
+
+" Installation check.
+NeoBundleCheck
+
+" }}}1
+" Option {{{1
+" File {{{2
+set modeline
+set nobackup
+set autoread
+set noswapfile
+set nowritebackup
+set hidden
+" Display {{{2
+if $TERM =~ "xterm-256color"
+    set t_Co=256
+    colorscheme wombat256mod
+endif
+"set foldcolumn=5
+set nolist
+set number
+set ruler
+set scrolloff=5
+set showcmd
+set showmode
+set title
+set wrap
+set laststatus=2
+set cmdheight=2
+set formatoptions+=mM
+set ambiwidth=double
+" Edit {{{2
+set autoindent
+set shiftround
+set backspace=indent,eol,start
+set expandtab
+set shiftwidth=4
+set softtabstop=0
+set showmatch
+set matchtime=3
+set tabstop=4
+set textwidth=0
+set matchpairs& matchpairs+=<:>
+set clipboard& clipboard+=unnamed
+" Search {{{2
+if &t_Co >2 || has("gui_running")
+    syntax on
+    set hlsearch
+endif
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
+set wrapscan
+" Mouse {{{2
+if has('mouse')
+    set mouse=a
+    set nomousefocus
+    set ttymouse=xterm2
+    set guioptions+=a
+endif
+" wild {{{2
+set wildmenu
+set wildmode=list:full
+" }}}1
 " lightline {{{2
-NeoBundle 'itchyny/lightline.vim'
 let g:lightline = {
       \ 'colorscheme': 'wombat',
       \ 'mode_map': { 'c': 'NORMAL' },
@@ -106,8 +202,37 @@ function! MyMode()
       \ winwidth('.') > 60 ? lightline#mode() : ''
 endfunction
 
+" map {{{1
+let mapleader = ","
+noremap \  ,
+
+nmap <silent> <Leader>r <Plug>(quickrun)
+inoremap jj <Esc>
+
+nmap <ESC><ESC> :nohlsearch<CR><ESC>
+
+" always escape / and ? in search character.
+cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
+cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
+
+nnoremap <Down> gj
+nnoremap <Up>   gk
+
+nnoremap <C-h>      :<C-u>help<Space>
+nnoremap <C-h><C-h> :<C-u>help<Space><C-r><C-w><CR>
+
+" unite {{{2
+let s:hooks = neobundle#get_hooks("unite.vim")
+function! s:hooks.on_source(bundle)
+endfunction
+unlet s:hooks
+
+nnoremap [unite] <Nop>
+xnoremap [unite] <Nop>
+nmap ;u [unite]
+xmap ;u [unite]
+
 " vimshell {{{2
-NeoBundle 'Shougo/vimshell'
 let s:hooks = neobundle#get('vimshell')
 function! s:hooks.hooks.on_source(bundle)
     let g:vimshell_interactive_update_time = 150
@@ -117,27 +242,13 @@ endfunction
 unlet s:hooks
 
 " Gundo {{{2
-NeoBundleLazy 'sjl/gundo.vim', {'autoload': {'commands': [{'name': 'GundoToggle'}]}}
 let s:hooks = neobundle#get_hooks("gundo.vim")
 function! s:hooks.on_source(bundle)
     let g:gundo_close_on_revert = 1 
 endfunction
 unlet s:hooks
-
 nnoremap U :<C-u>GundoToggle<CR>
-
 " neocomplete {{{2
-if has('lua') && ( (v:version == 703 && has('patch885')) || v:version >= 704 )
-    NeoBundle 'Shougo/neocomplete'
-    call neobundle#config('neocomplete.vim', {
-        \ 'lazy' : 1,
-        \ 'autoload' : {
-        \   'insert' : 1,
-        \   'commands' : 'NeoCompleteBufferMakeCache',
-        \ }})
-    let g:neocomplete#enable_at_startup = 1
-endif
-
 let s:hooks = neobundle#get_hooks("neocomplete.vim")
 function! s:hooks.on_source(bundle)
     " Use smartcase
@@ -199,101 +310,21 @@ function! s:hooks.on_source(bundle)
 endfunction
 unlet s:hooks
 
-" etc {{{2
-NeoBundle 'tpope/vim-fugitive'
-
-NeoBundleLazy 'gregsexton/gitv', {'autoload': {'commands': ['Gitv']}}
-
-" NeoBundle 'scrooloose/nerdtree'
-
-NeoBundleLazy 'sudo.vim', {'autoload': {'commands': ['SudoRead', 'SudoWrite']}}
-
-filetype plugin indent on
-
-" Installation check.
-NeoBundleCheck
-
-" }}}1
-" Option {{{1
-" File {{{2
-set modeline
-set nobackup
-set autoread
-set noswapfile
-set nowritebackup
-set hidden
-" Display {{{2
-if $TERM =~ "xterm-256color"
-    set t_Co=256
-    colorscheme wombat256mod
-endif
-"set foldcolumn=5
-set nolist
-set number
-set ruler
-set scrolloff=5
-set showcmd
-set showmode
-set title
-set wrap
-set laststatus=2
-set cmdheight=2
-set formatoptions+=mM
-set ambiwidth=double
-" Edit {{{2
-set autoindent
-set shiftround
-set backspace=indent,eol,start
-set expandtab
-set shiftwidth=4
-set softtabstop=0
-set showmatch
-set matchtime=3
-set tabstop=4
-set textwidth=0
-set matchpairs& matchpairs+=<:>
-set clipboard& clipboard+=unnamed
-" Search {{{2
-if &t_Co >2 || has("gui_running")
-    syntax on
-    set hlsearch
-endif
-set hlsearch
-set incsearch
-set ignorecase
-set smartcase
-set wrapscan
-" Mouse {{{2
-if has('mouse')
-    set mouse=a
-    set nomousefocus
-    set ttymouse=xterm2
-    set guioptions+=a
-endif
-" wild {{{2
-set wildmenu
-set wildmode=list:full
-" }}}1
-
-" map {{{1
-inoremap jj <Esc>
-
-nmap <ESC><ESC> :nohlsearch<CR><ESC>
-
-" always escape / and ? in search character.
-cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
-cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
-
-nnoremap <Down> gj
-nnoremap <Up>   gk
-
-nnoremap <C-h>      :<C-u>help<Space>
-nnoremap <C-h><C-h> :<C-u>help<Space><C-r><C-w><CR>
+" quickrun {{{2
+let s:hooks = neobundle#get_hooks("vim-quickrun")
+function! s:hooks.on_source(bundle)
+  let g:quickrun_config = {
+      \ "*": {"runner": "remote/vimproc"},
+      \ }
+endfunction
+unlet s:hooks
 
 " }}}1
 
 augroup MyAutoCmd
-    autocmd FileType help nnoremap <buffer> q <C-w>c
+    " Close windows
+    autocmd FileType help,quickrun nnoremap <buffer><silent> q :<C-u>call <SID>smart_close()<CR>
+
     " Enable omni completion.
     autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
     autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
@@ -305,6 +336,12 @@ augroup MyAutoCmd
     endif
     autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 augroup END
+
+function! s:smart_close()
+  if winnr('$') != 1
+    close
+  endif
+endfunction
 
 " vim:set foldmethod=marker:
 " vim:set foldlevel=1:
