@@ -131,75 +131,75 @@ set wildmode=list:full
 " }}}1
 " lightline {{{2
 let g:lightline = {
-      \ 'colorscheme': 'wombat',
-      \ 'mode_map': { 'c': 'NORMAL' },
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'fugitive', 'filename' ] ]
-      \ },
-      \ 'component_function': {
-      \   'modified': 'MyModified',
-      \   'readonly': 'MyReadonly',
-      \   'fugitive': 'MyFugitive',
-      \   'filename': 'MyFilename',
-      \   'fileformat': 'MyFileformat',
-      \   'filetype': 'MyFiletype',
-      \   'fileencoding': 'MyFileencoding',
-      \   'mode': 'MyMode'
-      \ },
-      \ 'separator': { 'left': '⮀', 'right': '⮂' },
-      \ 'subseparator': { 'left': '⮁', 'right': '⮃' }
-      \ }
+    \ 'colorscheme': 'wombat',
+    \ 'mode_map': { 'c': 'NORMAL' },
+    \ 'active': {
+    \   'left': [ [ 'mode', 'paste' ],
+    \             [ 'fugitive', 'filename' ] ]
+    \ },
+    \ 'component_function': {
+    \   'modified': 'MyModified',
+    \   'readonly': 'MyReadonly',
+    \   'fugitive': 'MyFugitive',
+    \   'filename': 'MyFilename',
+    \   'fileformat': 'MyFileformat',
+    \   'filetype': 'MyFiletype',
+    \   'fileencoding': 'MyFileencoding',
+    \   'mode': 'MyMode'
+    \ },
+    \ 'separator': { 'left': '⮀', 'right': '⮂' },
+    \ 'subseparator': { 'left': '⮁', 'right': '⮃' }
+    \ }
 
 function! MyModified()
-  return &filetype =~ 'help\|git' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+    return &filetype =~ 'help\|git' ? '' : &modified ? '+' : &modifiable ? '' : '-'
 endfunction
 
 function! MyReadonly()
-  return &filetype !~? 'help\|git' && &readonly ? '⭤' : ''
+    return &filetype !~? 'help\|git' && &readonly ? '⭤' : ''
 endfunction
 
 function! MyFugitive()
-  try
-    if &filetype !~? 'git' && expand('%:t') !~? 'Gundo' && exists("*fugitive#head")
-      let _ = fugitive#head()
-      return strlen(_) ? '⭠ '._ : ''
-    endif
-  catch
-  endtry
-  return ''
+    try
+        if &filetype !~? 'git' && expand('%:t') !~? 'Gundo' && exists("*fugitive#head")
+            let _ = fugitive#head()
+            return strlen(_) ? '⭠ '._ : ''
+        endif
+    catch
+        endtry
+        return ''
 endfunction
 
 function! MyFilename()
-  let fname = expand('%:t')
-  return fname =~ '__Gundo\|Gitv' ? '' :
-    \ &filetype == 'vimshell' ? substitute(b:vimshell.current_dir,expand('~'),'~','') :
-    \ ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
-    \ ('' != expand('%:t') ? expand('%:t') : '[No Name]') .
-    \ ('' != MyModified() ? ' ' . MyModified() : '')
+    let fname = expand('%:t')
+    return fname =~ '__Gundo\|Gitv' ? '' :
+        \ &filetype == 'vimshell' ? substitute(b:vimshell.current_dir,expand('~'),'~','') :
+        \ ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
+        \ ('' != expand('%:t') ? expand('%:t') : '[No Name]') .
+        \ ('' != MyModified() ? ' ' . MyModified() : '')
 endfunction
 
 function! MyFileformat()
-  return &filetype !~? 'vimshell' && winwidth('.') > 70 ? &fileformat : ''
+    return &filetype !~? 'vimshell' && winwidth('.') > 70 ? &fileformat : ''
 endfunction
 
 function! MyFiletype()
-  return &filetype !~? 'vimshell' && winwidth('.') > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
+    return &filetype !~? 'vimshell' && winwidth('.') > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
 endfunction
 
 function! MyFileencoding()
-  return &filetype !~? 'vimshell' && winwidth('.') > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
+    return &filetype !~? 'vimshell' && winwidth('.') > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
 endfunction
 
 function! MyMode()
-  let fname = expand('%:t')
-    return fname == '__Gundo__' ? 'Gundo' :
-      \ fname == '__Gundo_Preview__' ? 'Gundo Preview' :
-      \ &filetype == 'gitv' ? 'Gitv' :
-      \ &filetype == 'git' ? 'Git' :
-      \ &filetype == 'vimshell' ? 'VimShell' :
-      \ &filetype == 'dictionary' ? 'Dictionary' :
-      \ winwidth('.') > 60 ? lightline#mode() : ''
+    let fname = expand('%:t')
+        return fname == '__Gundo__' ? 'Gundo' :
+            \ fname == '__Gundo_Preview__' ? 'Gundo Preview' :
+            \ &filetype == 'gitv' ? 'Gitv' :
+            \ &filetype == 'git' ? 'Git' :
+            \ &filetype == 'vimshell' ? 'VimShell' :
+            \ &filetype == 'dictionary' ? 'Dictionary' :
+            \ winwidth('.') > 60 ? lightline#mode() : ''
 endfunction
 
 " map {{{1
@@ -313,9 +313,11 @@ unlet s:hooks
 " quickrun {{{2
 let s:hooks = neobundle#get_hooks("vim-quickrun")
 function! s:hooks.on_source(bundle)
-  let g:quickrun_config = {
-      \ "*": {"runner": "remote/vimproc"},
-      \ }
+    let g:quickrun_config = {
+        \ "_": {
+            "runner": "remote/vimproc"},
+            "outputter/buffer/split" : ":botright 8sp",
+        \ }
 endfunction
 unlet s:hooks
 
@@ -338,9 +340,9 @@ augroup MyAutoCmd
 augroup END
 
 function! s:smart_close()
-  if winnr('$') != 1
-    close
-  endif
+    if winnr('$') != 1
+        close
+    endif
 endfunction
 
 " vim:set foldmethod=marker:
