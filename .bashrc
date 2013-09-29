@@ -66,7 +66,7 @@ esac
 
 # enable color support of ls and also add handy aliases
 case "`uname`" in
-    Darwin) # for MAc
+    Darwin) # for Mac
         alias ls='ls -G'
         alias grep='grep --color=auto'
         alias fgrep='fgrep --color=auto'
@@ -109,10 +109,13 @@ fi
 
 # vim setteing
 case "`uname`" in
-    Darwin) # for MAc
+    Darwin) # for Mac
         if [ -d /Applications/MacVim.app ]; then
             PATH="/Applications/MacVim.app/Contents/MacOS:$PATH"
-	    alias vi="mvim --remote-tab-silent"
+	        alias vim="mvim --remote-tab-silent"
+	        alias vi="vim"
+	        alias vimdiff="mvimdiff"
+	        alias view="mview"
         fi
         ;;
 
@@ -127,15 +130,3 @@ fi
 
 # rbenv
 eval "$(rbenv init -)"
-
-# screen
-agent="$HOME/tmp/.ssh-agent-`hostname`"
-if [ -S "$agent" ]; then
-    export SSH_AUTH_SOCK=$agent
-elif [ ! -S "$SSH_AUTH_SOCK" ]; then
-    export SSH_AUTH_SOCK=$agent
-elif [ ! -L "$SSH_AUTH_SOCK" ]; then
-    ln -snf "$SSH_AUTH_SOCK" $agent && export SSH_AUTH_SOCK=$agent
-fi
-
-# [ $STY ] || screen -rx || screen -S main -D -RR
