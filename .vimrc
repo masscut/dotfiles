@@ -28,6 +28,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/neocomplete'
+NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/vimshell'
 NeoBundle 'itchyny/lightline.vim'
 NeoBundleLazy 'sjl/gundo.vim', {'autoload': {'commands': [{'name': 'GundoToggle'}]}}
@@ -41,21 +42,21 @@ NeoBundleLazy 'sudo.vim', {'autoload': {'commands': ['SudoRead', 'SudoWrite']}}
 " NeoBundle 'scrooloose/nerdtree'
 
 call neobundle#config('vimproc', {
-      \ 'build' : {
-      \     'windows' : 'make -f make_mingw32.mak',
-      \     'cygwin' : 'make -f make_cygwin.mak',
-      \     'mac' : 'make -f make_mac.mak',
-      \     'unix' : 'make -f make_unix.mak',
-      \    },
-      \ })
+    \ 'build' : {
+    \     'windows' : 'make -f make_mingw32.mak',
+    \     'cygwin' : 'make -f make_cygwin.mak',
+    \     'mac' : 'make -f make_mac.mak',
+    \     'unix' : 'make -f make_unix.mak',
+    \    },
+    \ })
 
 call neobundle#config('unite.vim',{
-      \ 'lazy' : 1,
-      \ 'autoload' : {
-      \   'commands' : [{ 'name' : 'Unite',
-      \                   'complete' : 'customlist,unite#complete_source'},
-      \                 'UniteWithCursorWord', 'UniteWithInput']
-      \ }})
+    \ 'lazy' : 1,
+    \ 'autoload' : {
+    \   'commands' : [{ 'name' : 'Unite',
+    \                   'complete' : 'customlist,unite#complete_source'},
+    \                 'UniteWithCursorWord', 'UniteWithInput']
+    \ }})
 
 "if has('lua') && ( (v:version == 703 && has('patch885')) || v:version >= 704 )
 call neobundle#config('neocomplete.vim', {
@@ -66,6 +67,14 @@ call neobundle#config('neocomplete.vim', {
     \ }})
 let g:neocomplete#enable_at_startup = 1
 "endif
+
+call neobundle#config('neosnippet', {
+    \ 'lazy' : 1,
+    \ 'autoload' : {
+    \   'insert' : 1,
+    \   'filetypes' : 'snippet',
+    \   'unite_sources' : ['snippet', 'neosnippet/user', 'neosnippet/runtime'],
+    \ }})
 
 filetype plugin indent on
 
@@ -252,6 +261,7 @@ function! s:hooks.on_source(bundle)
 endfunction
 unlet s:hooks
 nnoremap U :<C-u>GundoToggle<CR>
+
 " neocomplete {{{2
 let s:hooks = neobundle#get_hooks("neocomplete.vim")
 function! s:hooks.on_source(bundle)
@@ -313,6 +323,24 @@ function! s:hooks.on_source(bundle)
     inoremap <expr><C-e>  neocomplete#cancel_popup()
 endfunction
 unlet s:hooks
+
+" neosnippet {{{2
+let s:hooks = neobundle#get_hooks("neosnippet.vim")
+function! s:hooks.on_source(bundle)
+    let g:neosnippet#enable_snipmate_compatibility = 1
+    let g:neosnippet#snippets_directory = '~/.vim/snippets'
+endfunction
+unlet s:hooks
+
+imap <C-k>      <Plug>(neosnippet_expand_or_jump)
+smap <C-k>      <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>      <Plug>(neosnippet_expand_target)
+imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+    \ "\<Plug>(neosnippet_expand_or_jump)"
+    \: pumvisible() ? "\<C-n>" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+    \ "\<Plug>(neosnippet_expand_or_jump)"
+    \: "\<TAB>"   
 
 " quickrun {{{2
 let s:hooks = neobundle#get_hooks("vim-quickrun")
