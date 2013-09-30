@@ -39,6 +39,10 @@ NeoBundleLazy 'thinca/vim-quickrun', { 'autoload' : {
 NeoBundle 'tpope/vim-fugitive'
 NeoBundleLazy 'gregsexton/gitv', {'autoload': {'commands': ['Gitv']}}
 NeoBundleLazy 'sudo.vim', {'autoload': {'commands': ['SudoRead', 'SudoWrite']}}
+NeoBundleLazy 'Shougo/unite-help', { 'autoload' : {
+    \ 'unite_sources' : 'help'
+    \ }}
+
 " NeoBundle 'scrooloose/nerdtree'
 
 call neobundle#config('vimproc', {
@@ -217,7 +221,7 @@ function! MyMode()
             \ &filetype == 'gitv' ? 'Gitv' :
             \ &filetype == 'git' ? 'Git' :
             \ &filetype == 'gitcommit' ? 'fugitive' :
-            \ &filetype == 'Unite' ? 'fugitive' :
+            \ &filetype == 'unite' ? 'Unite' :
             \ &filetype == 'vimshell' ? 'VimShell' :
             \ &filetype == 'dictionary' ? 'Dictionary' :
             \ winwidth('.') > 60 ? lightline#mode() : ''
@@ -266,7 +270,8 @@ for n in range(1, 9)
   execute 'nnoremap <silent> [Tag]'.n  ':<C-u>tabnext'.n.'<CR>'
 endfor
 
-nnoremap <C-h>      :<C-u>help<Space>
+"nnoremap <C-h>      :<C-u>help<Space>
+nnoremap <silent> <C-h>  :<C-u>Unite -buffer-name=help help<CR>
 nnoremap <C-h><C-h> :<C-u>help<Space><C-r><C-w><CR>
 
 " unite {{{2
