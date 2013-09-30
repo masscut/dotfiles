@@ -107,6 +107,7 @@ set wrap
 set laststatus=2
 set cmdheight=2
 set formatoptions+=mM
+set showtabline=2
 set ambiwidth=double
 " Edit {{{2
 set autoindent
@@ -160,6 +161,10 @@ let g:lightline = {
     \   'fileencoding': 'MyFileencoding',
     \   'mode': 'MyMode'
     \ },
+    \ 'tab_component_function': {
+    \   'filename': 'MyTabFilename',
+    \   'readonly': 'MyTabReadonly',
+    \ },
     \ 'separator': { 'left': '⮀', 'right': '⮂' },
     \ 'subseparator': { 'left': '⮁', 'right': '⮃' }
     \ }
@@ -186,6 +191,7 @@ endfunction
 function! MyFilename()
     let fname = expand('%:t')
     return fname =~ '__Gundo\|Gitv' ? '' :
+        \ &filetype == 'unite' ? unite#get_status_string() :
         \ &filetype == 'vimshell' ? substitute(b:vimshell.current_dir,expand('~'),'~','') :
         \ ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
         \ ('' != expand('%:t') ? expand('%:t') : '[No Name]') .
@@ -210,9 +216,30 @@ function! MyMode()
             \ fname == '__Gundo_Preview__' ? 'Gundo Preview' :
             \ &filetype == 'gitv' ? 'Gitv' :
             \ &filetype == 'git' ? 'Git' :
+            \ &filetype == 'gitcommit' ? 'fugitive' :
+            \ &filetype == 'Unite' ? 'fugitive' :
             \ &filetype == 'vimshell' ? 'VimShell' :
             \ &filetype == 'dictionary' ? 'Dictionary' :
             \ winwidth('.') > 60 ? lightline#mode() : ''
+endfunction
+
+function! MyTabReadonly(n)
+    let buflist = tabpagebuflist(a:n)
+    let winnr = tabpagewinnr(a:n)
+    return gettabwinvar(a:n, winnr, '&readonly') ? '⭤' : ''
+endfunction
+
+function! MyTabFilename(n)
+    let buflist = tabpagebuflist(a:n)
+    let winnr = tabpagewinnr(a:n)
+    let fname = expand("#".buflist[winnr - 1].":t")
+    let ft = gettabwinvar(a:n, winnr, '&filetype')
+    return fname == '__Tagbar__' ? 'Tagbar' :
+          \ fname =~ '__Gundo' ? 'Gundo' :
+          \ &filetype == 'unite' ? 'Unite' :
+          \ &filetype == 'vimshell' ? 'VimShell' :
+          \ &filetype == 'dictionary' ? 'Dictionary' :
+        \ strlen(fname) ? fname : '[No Name]'
 endfunction
 
 " map {{{1
@@ -230,6 +257,14 @@ cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
 
 nnoremap <Down> gj
 nnoremap <Up>   gk
+
+" The prefix key.
+nnoremap [Tag] <Nop>
+nmap t [Tag]
+" Tab jump
+for n in range(1, 9)
+  execute 'nnoremap <silent> [Tag]'.n  ':<C-u>tabnext'.n.'<CR>'
+endfor
 
 nnoremap <C-h>      :<C-u>help<Space>
 nnoremap <C-h><C-h> :<C-u>help<Space><C-r><C-w><CR>
