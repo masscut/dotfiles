@@ -272,8 +272,8 @@ endfor
 
 "nnoremap <C-h>      :<C-u>help<Space>
 nnoremap <silent> <C-h>  :<C-u>Unite -buffer-name=help help<CR>
-nnoremap <C-h><C-h> :<C-u>help<Space><C-r><C-w><CR>
-
+" Execute help by cursor keyword.
+nnoremap <silent> g<C-h>  :<C-u>UniteWithCursorWord help<CR>
 " unite {{{2
 let s:hooks = neobundle#get_hooks("unite.vim")
 function! s:hooks.on_source(bundle)
