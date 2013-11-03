@@ -3,12 +3,19 @@
 
 let s:is_windows = has('win16') || has('win32') || has('win64')
 
+if s:is_windows
+    let g:neobundle_default_git_protocol='https'
+    set runtimepath^=$HOME/.vim
+    set runtimepath+=$HOME/.vim/after
+    set encoding=utf-8
+endif
+
 set nocompatible 
 filetype off
 
 " release autogroup in MyAutoCmd
 augroup MyAutoCmd
-  autocmd!
+    autocmd!
 augroup END
 
 " Ignore default configuration while editing
@@ -17,12 +24,12 @@ augroup END
 
 " Plugin {{{1
 if has('vim_starting')
-  set runtimepath+=~/.vim/bundle/neobundle.vim/ 
+    set runtimepath+=~/.vim/bundle/neobundle.vim/ 
 endif
 
 call neobundle#rc(expand('~/.vim/bundle/'))
 
- " Let NeoBundle manage NeoBundle
+" Let NeoBundle manage NeoBundle
 NeoBundleFetch 'Shougo/neobundle.vim'
 
 NeoBundle 'Shougo/vimproc'
