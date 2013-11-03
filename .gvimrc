@@ -2,7 +2,7 @@ let s:is_windows = has('win16') || has('win32') || has('win64')
 " Option {{{1
 " Window {{{2
 set columns=100
-set lines=40
+set lines=60
 set cmdheight=2
 set transparency=10
 set t_Co=256
