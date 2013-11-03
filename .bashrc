@@ -128,5 +128,8 @@ if [ -f /usr/local/bin/src-hilite-lesspipe.sh ]; then
     export LESSOPEN='| /usr/local/bin/src-hilite-lesspipe.sh %s'
 fi
 
-# rbenv
+# xxenv
 eval "$(rbenv init -)"
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
