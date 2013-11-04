@@ -128,8 +128,17 @@ if [ -f /usr/local/bin/src-hilite-lesspipe.sh ]; then
     export LESSOPEN='| /usr/local/bin/src-hilite-lesspipe.sh %s'
 fi
 
-# xxenv
-eval "$(rbenv init -)"
+# rbenv
+if [ -f /usr/local/bin/rbenv ]; then
+    eval "$(rbenv init - zsh)"
+fi
 
-### Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"
+# Added by the Heroku Toolbelt
+if [ -d /usr/local/heroku ]; then
+    export PATH="/usr/local/heroku/bin:$PATH"
+fi
+
+# awscli 
+if [ -f /usr/local/bin/aws_zsh_completer.sh ]; then
+    source /usr/local/bin/aws_zsh_completer.sh
+fi
