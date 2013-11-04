@@ -16,4 +16,4 @@ ln -s $PWD/.vim ~/.vim
 ln -s $PWD/.bashrc ~/.bashrc
 ln -s $PWD/.zshrc ~/.zshrc
 
-vi +NeoBundleInstall +q
+#vi +NeoBundleInstall +q
