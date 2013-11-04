@@ -1,10 +1,10 @@
 #/bin/sh
 PWD=`pwd`
 
-git submodule init
-git submodule update
+#git submodule init
+#git submodule update
 
-lrm -f ~/.vimrc
+rm -f ~/.vimrc
 rm -f ~/.gvimrc
 rm -rf ~/.vim
 rm -f ~/.bashrc
