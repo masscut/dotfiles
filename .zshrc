@@ -45,6 +45,7 @@ plugins=(git brew ruby)
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
+setopt nonomatch
 
 # vim setteing
 case "`uname`" in
