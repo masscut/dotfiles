@@ -82,3 +82,8 @@ fi
 if [ -f /usr/local/bin/aws_zsh_completer.sh ]; then
     source /usr/local/bin/aws_zsh_completer.sh
 fi
+
+# virtualenvwrapper
+if [ -f /usr/local/bin/virtualenvwrapper_lazy.sh ]; then
+    source /usr/local/bin/virtualenvwrapper_lazy.sh
+fi

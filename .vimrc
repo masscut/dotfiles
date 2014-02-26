@@ -1,6 +1,5 @@
 " Initialize {{{1
 
-
 let s:is_windows = has('win16') || has('win32') || has('win64')
 
 if s:is_windows
@@ -36,6 +35,7 @@ NeoBundle 'Shougo/vimproc'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/neocomplete'
 NeoBundle 'Shougo/neosnippet'
+NeoBundle 'Shougo/neosnippet-snippets'
 NeoBundle 'Shougo/vimshell'
 NeoBundle 'itchyny/lightline.vim'
 NeoBundleLazy 'sjl/gundo.vim', {'autoload': {'commands': [{'name': 'GundoToggle'}]}}
