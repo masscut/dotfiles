@@ -87,3 +87,8 @@ fi
 if [ -f /usr/local/bin/virtualenvwrapper_lazy.sh ]; then
     source /usr/local/bin/virtualenvwrapper_lazy.sh
 fi
+
+# docker
+if [ -f /usr/bins/docker ]; then
+    alias dl='docker ps -l -q'
+fi
