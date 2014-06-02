@@ -92,3 +92,8 @@ fi
 if [ -f /usr/bins/docker ]; then
     alias dl='docker ps -l -q'
 fi
+
+# user bin
+if [ -d $HOME/bin ]; then
+    export PATH=$HOME/bin:$PATH
+fi
