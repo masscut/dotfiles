@@ -89,7 +89,7 @@ if [ -f /usr/local/bin/virtualenvwrapper_lazy.sh ]; then
 fi
 
 # docker
-if [ -f /usr/bins/docker ]; then
+if [ -f /usr/bin/docker ]; then
     alias dl='docker ps -l -q'
 fi
 
@@ -97,3 +97,10 @@ fi
 if [ -d $HOME/bin ]; then
     export PATH=$HOME/bin:$PATH
 fi
+
+
+# JAVA
+if [ `uname` = "Darwin" ]; then
+    export JAVA_HOME=`/usr/libexec/java_home -v 1.7.0_51`
+fi
+

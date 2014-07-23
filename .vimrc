@@ -133,6 +133,7 @@ set tabstop=4
 set textwidth=0
 set matchpairs& matchpairs+=<:>
 set clipboard& clipboard+=unnamed
+set undodir=~/.vim/undo
 " Search {{{2
 if &t_Co >2 || has("gui_running")
     syntax on
