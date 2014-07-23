@@ -62,33 +62,43 @@ case "`uname`" in
     *) ;;
 esac
 
+# user bin
+if [ -d $HOME/bin ]; then
+    export PATH=$HOME/bin:$PATH
+fi
 #less
 if [ -f /usr/local/bin/src-hilite-lesspipe.sh ]; then
     export LESS='-R'
     export LESSOPEN='| /usr/local/bin/src-hilite-lesspipe.sh %s'
 fi
-
-# rbenv
+#colordiff
+if [ -x `which colordiff` ]; then
+    alias diff='colordiff -u'
+  else
+    alias diff='diff -u'
+fi
+# rbenv Mac
 if [ -f /usr/local/bin/rbenv ]; then
     eval "$(rbenv init - zsh)"
 fi
-
+#rbenv linux
+if [ -d $HOME/.rbenv ]; then
+    export PATH=$HOME/.rbenv/bin:$PATH
+    eval "$(rbenv init - zsh)"
+fi
 # Added by the Heroku Toolbelt
 if [ -d /usr/local/heroku ]; then
     export PATH="/usr/local/heroku/bin:$PATH"
 fi
-
 # awscli 
 if [ -f /usr/local/bin/aws_zsh_completer.sh ]; then
     source /usr/local/bin/aws_zsh_completer.sh
 fi
-
 # virtualenvwrapper
 if [ -f /usr/local/bin/virtualenvwrapper_lazy.sh ]; then
     source /usr/local/bin/virtualenvwrapper_lazy.sh
 fi
 
-# docker
 if [ -f /usr/bin/docker ]; then
     alias dl='docker ps -l -q'
 fi
@@ -98,9 +108,12 @@ if [ -d $HOME/bin ]; then
     export PATH=$HOME/bin:$PATH
 fi
 
-
 # JAVA
 if [ `uname` = "Darwin" ]; then
     export JAVA_HOME=`/usr/libexec/java_home -v 1.7.0_51`
 fi
 
+# docker
+if [ -x `which docker` ]; then
+    alias dl='docker ps -l -q'
+fi
