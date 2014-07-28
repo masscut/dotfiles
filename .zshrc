@@ -70,6 +70,10 @@ case ${OSTYPE} in
             export PATH=$HOME/.rbenv/bin:$PATH
             eval "$(rbenv init - zsh)"
         fi
+        # gvm
+        if [ -s "$HOME/.gvm/bin/gvm-init.sh" ]; then
+            source "$HOME/.gvm/bin/gvm-init.sh"
+        fi
         ;;
     *) ;;
 esac
