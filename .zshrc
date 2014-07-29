@@ -70,10 +70,6 @@ case ${OSTYPE} in
             export PATH=$HOME/.rbenv/bin:$PATH
             eval "$(rbenv init - zsh)"
         fi
-        # gvm
-        if [ -s "$HOME/.gvm/bin/gvm-init.sh" ]; then
-            source "$HOME/.gvm/bin/gvm-init.sh"
-        fi
         ;;
     *) ;;
 esac
@@ -109,6 +105,11 @@ fi
 # virtualenvwrapper
 if [ -f /usr/local/bin/virtualenvwrapper_lazy.sh ]; then
     source /usr/local/bin/virtualenvwrapper_lazy.sh
+fi
+
+# gvm
+if [ -s "$HOME/.gvm/bin/gvm-init.sh" ]; then
+    source "$HOME/.gvm/bin/gvm-init.sh"
 fi
 
 # docker
