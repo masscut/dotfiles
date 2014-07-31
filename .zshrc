@@ -116,3 +116,9 @@ fi
 if [[ -x `which docker` ]]; then
     alias dl='docker ps -l -q'
 fi
+
+# nodebrew
+if [ -d $HOME/.nodebrew ]; then
+    export PATH=$HOME/.nodebrew/current/bin:$PATH
+fi
+
