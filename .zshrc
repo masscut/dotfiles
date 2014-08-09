@@ -105,7 +105,6 @@ if [ -d /usr/local/heroku ]; then
     export PATH="/usr/local/heroku/bin:$PATH"
 fi
 
-
 # virtualenvwrapper
 if [ -f /usr/local/bin/virtualenvwrapper_lazy.sh ]; then
     source /usr/local/bin/virtualenvwrapper_lazy.sh
@@ -125,4 +124,3 @@ fi
 if [ -d $HOME/.nodebrew ]; then
     export PATH=$HOME/.nodebrew/current/bin:$PATH
 fi
-
