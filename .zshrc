@@ -61,14 +61,22 @@ case ${OSTYPE} in
         if [ -f /usr/local/bin/rbenv ]; then
             eval "$(rbenv init - zsh)"
         fi
+        # awscli
+        if [ -f /usr/local/share/zsh/site-functions/_aws ]; then
+            source /usr/local/share/zsh/site-functions/_aws
+        fi
         # JAVA
-        export JAVA_HOME=`/usr/libexec/java_home -v 1.7.0_51`
+        export JAVA_HOME=`/usr/libexec/java_home`
         ;;
     linux*) # for linux
         # rbenv
         if [ -d $HOME/.rbenv ]; then
             export PATH=$HOME/.rbenv/bin:$PATH
             eval "$(rbenv init - zsh)"
+        fi
+        # awscli 
+        if [ -f /usr/local/bin/aws_zsh_completer.sh ]; then
+            source /usr/local/bin/aws_zsh_completer.sh
         fi
         ;;
     *) ;;
@@ -97,11 +105,6 @@ if [ -d /usr/local/heroku ]; then
     export PATH="/usr/local/heroku/bin:$PATH"
 fi
 
-# awscli 
-if [ -f /usr/local/bin/aws_zsh_completer.sh ]; then
-    source /usr/local/bin/aws_zsh_completer.sh
-fi
-
 # virtualenvwrapper
 if [ -f /usr/local/bin/virtualenvwrapper_lazy.sh ]; then
     source /usr/local/bin/virtualenvwrapper_lazy.sh
@@ -121,4 +124,3 @@ fi
 if [ -d $HOME/.nodebrew ]; then
     export PATH=$HOME/.nodebrew/current/bin:$PATH
 fi
-
