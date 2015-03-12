@@ -138,11 +138,6 @@ if [ -d /usr/local/heroku ]; then
     export PATH="/usr/local/heroku/bin:$PATH"
 fi
 
-# awscli 
-if [ -f /usr/local/bin/aws_zsh_completer.sh ]; then
-    source /usr/local/bin/aws_zsh_completer.sh
-fi
-
 # virtualenvwrapper
 if [ -f /usr/local/bin/virtualenvwrapper_lazy.sh ]; then
         source /usr/local/bin/virtualenvwrapper_lazy.sh
