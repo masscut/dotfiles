@@ -25,7 +25,7 @@ endif
 
 call neobundle#begin(expand('$HOME/.vim/bundle/'))
 
-if neobundle#has_cache()
+if neobundle#load_cache()
     NeoBundleFetch 'Shougo/neobundle.vim'
 
     NeoBundle 'Shougo/vimproc.vim', {
@@ -41,10 +41,6 @@ if neobundle#has_cache()
     NeoBundle 'itchyny/lightline.vim'
 
     call neobundle#load_toml('$HOME/.vim/neobundle.toml', {'lazy' : 1})
-
-    NeoBundleLoadCache
-else
-    NeoBundleSaveCache
 endif
 
 source ~/.vim/rc/plugins.rc.vim
