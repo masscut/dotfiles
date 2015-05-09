@@ -56,6 +56,8 @@ source ~/.vim/rc/edit.rc.vim
 
 source ~/.vim/rc/plugins/lightline.rc.vim
 
+"source ~/.vim/rc/filetype.rc.vim
+
 source ~/.vim/rc/mappings.rc.vim
 
 " vim:set foldmethod=marker:
