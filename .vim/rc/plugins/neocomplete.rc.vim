@@ -30,6 +30,7 @@ let g:neocomplete#sources#dictionary#dictionaries = {
 " Insert delimiter automatically; /(filename) or #(Vim script)
 let g:neocomplete#enable_auto_delimiter = 1
 let g:neocomplete#max_list = 100
+"let g:neocomplete#force_overwrite_completefunc = 1
 
 if !exists('g:neocomplete#sources#omni#input_patterns')
   let g:neocomplete#sources#omni#input_patterns = {}
