@@ -17,6 +17,11 @@ cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
 nnoremap <Down> gj
 nnoremap <Up>   gk
 
+" <C-n>: next history.
+cnoremap <C-n> <Down>
+" <C-p>: previous history.
+cnoremap <C-p> <Up>
+
 " tab jump
 nnoremap [Tag] <Nop>
 nmap t [Tag]
