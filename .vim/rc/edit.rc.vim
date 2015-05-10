@@ -64,4 +64,4 @@ endif
 set wildmenu
 set wildmode=list:full
 
-
+set history 200

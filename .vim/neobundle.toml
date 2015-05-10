@@ -29,3 +29,7 @@ mappings = '<Plug>'
   [plugins.commands]
   name = 'VimShell'
   complete = 'customlist,vimshell#complete'
+
+[[plugins]]
+repository = 'tyru/caw.vim'
+mappings = '<Plug>'
