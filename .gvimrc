@@ -12,8 +12,8 @@ if s:is_windows
 	set guifontwide=MS_Gothic:h10
 	set guifont=Consolas\ for\ Powerline\ FixedD:h10
 else
-	set guifontwide=Osaka:h12
-	set guifont=Consolas\ for\ Powerline:h12 
+	set guifontwide=Osaka:h11
+	set guifont=Consolas\ for\ Powerline:h11 
 endif
 set antialias
 " Mouse {{{2
