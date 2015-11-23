@@ -82,12 +82,14 @@ if [ -f /usr/local/bin/virtualenvwrapper_lazy.sh ]; then
     source /usr/local/bin/virtualenvwrapper_lazy.sh
 fi
 
-# gvm
-if [ -s "$HOME/.gvm/bin/gvm-init.sh" ]; then
-    source "$HOME/.gvm/bin/gvm-init.sh"
+# sdkman
+if [ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]; then
+    export SDKMAN_DIR="$HOME/.sdkman"
+    source "$HOME/.sdkman/bin/sdkman-init.sh"
 fi
 
 # docker
+eval $(docker-machine env default)
 if [[ -x `which docker` ]]; then
     alias dl='docker ps -l -q'
 fi
