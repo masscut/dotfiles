@@ -1,0 +1,13 @@
+[[plugins]]
+repo = 'Shougo/dein.vim'
+
+[[plugins]]
+repo = 'Shougo/vimproc.vim'
+build = 'make'
+
+[[plugins]]
+repo = 'tpope/vim-fugitive'
+
+[[plugins]]
+repo = 'itchyny/lightline.vim'
+hook_add = 'source ~/.vim/rc/plugins/lightline.rc.vim'
