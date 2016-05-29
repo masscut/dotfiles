@@ -11,6 +11,9 @@ hook_source = '''
 [[plugins]]
 repo   = 'Shougo/unite.vim'
 on_cmd = ['Unite']
+hook_add = '''
+let g:unite_force_overwrite_statusline = 0
+'''
 
 [[plugins]]
 repo      = 'Shougo/neomru.vim'
