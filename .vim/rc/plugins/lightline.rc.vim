@@ -1,103 +1,70 @@
 " ------------------------------------------------------------------------------
 " lightline
 "
-
 let g:lightline = {
-    \ 'colorscheme': 'wombat',
-    \ 'mode_map': { 'c': 'NORMAL' },
-    \ 'active': {
-    \   'left': [ [ 'mode', 'paste' ],
-    \             [ 'fugitive', 'filename' ] ]
-    \ },
-    \ 'component_function': {
-    \   'modified': 'MyModified',
-    \   'readonly': 'MyReadonly',
-    \   'fugitive': 'MyFugitive',
-    \   'filename': 'MyFilename',
-    \   'fileformat': 'MyFileformat',
-    \   'filetype': 'MyFiletype',
-    \   'fileencoding': 'MyFileencoding',
-    \   'mode': 'MyMode'
-    \ },
-    \ 'tab_component_function': {
-    \   'filename': 'MyTabFilename',
-    \   'readonly': 'MyTabReadonly',
-    \ },
-    \ 'separator': { 'left': '⮀', 'right': '⮂' },
-    \ 'subseparator': { 'left': '⮁', 'right': '⮃' }
-    \ }
+      \ 'colorscheme': 'wombat',
+      \ 'mode_map': { 'c': 'NORMAL' },
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
+      \ },
+      \ 'component_function': {
+      \   'modified': 'LightLineModified',
+      \   'readonly': 'LightLineReadonly',
+      \   'fugitive': 'LightLineFugitive',
+      \   'filename': 'LightLineFilename',
+      \   'fileformat': 'LightLineFileformat',
+      \   'filetype': 'LightLineFiletype',
+      \   'fileencoding': 'LightLineFileencoding',
+      \   'mode': 'LightLineMode',
+      \ },
+      \ 'separator': { 'left': '⮀', 'right': '⮂' },
+      \ 'subseparator': { 'left': '⮁', 'right': '⮃' }
+      \ }
 
-function! MyModified()
-    return &filetype =~ 'help\|git' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+function! LightLineModified()
+  return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
 endfunction
 
-function! MyReadonly()
-    return &filetype !~? 'help\|git' && &readonly ? '⭤' : ''
+function! LightLineReadonly()
+  return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? '⭤' : ''
 endfunction
 
-function! MyFugitive()
-    try
-        if &filetype !~? 'git' && expand('%:t') !~? 'Gundo' && exists("*fugitive#head")
-            let _ = fugitive#head()
-            return strlen(_) ? '⭠ '._ : ''
-        endif
-    catch
-        endtry
-        return ''
+function! LightLineFilename()
+  return ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
+        \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
+        \  &ft == 'unite' ? unite#get_status_string() :
+        \  &ft == 'vimshell' ? vimshell#get_status_string() :
+        \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
+        \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
 endfunction
 
-function! MyFilename()
-    let fname = expand('%:t')
-    return fname =~ '__Gundo\|Gitv' ? '' :
-        \ &filetype == 'unite' ? unite#get_status_string() :
-        \ &filetype == 'vimshell' ? substitute(b:vimshell.current_dir,expand('~'),'~','') :
-        \ ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
-        \ ('' != expand('%:t') ? expand('%:t') : '[No Name]') .
-        \ ('' != MyModified() ? ' ' . MyModified() : '')
+function! LightLineFugitive()
+  if &ft !~? 'vimfiler\|gundo' && exists("*fugitive#head")
+    let branch = fugitive#head()
+    return branch !=# '' ? '⭠ '.branch : ''
+  endif
+  return ''
 endfunction
 
-function! MyFileformat()
-    return &filetype !~? 'vimshell' && winwidth('.') > 70 ? &fileformat : ''
+function! LightLineFileformat()
+  return winwidth(0) > 70 ? &fileformat : ''
 endfunction
 
-function! MyFiletype()
-    return &filetype !~? 'vimshell' && winwidth('.') > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
+function! LightLineFiletype()
+  return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
 endfunction
 
-function! MyFileencoding()
-    return &filetype !~? 'vimshell' && winwidth('.') > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
+function! LightLineFileencoding()
+  return winwidth(0) > 70 ? (&fenc !=# '' ? &fenc : &enc) : ''
 endfunction
 
-function! MyMode()
-    let fname = expand('%:t')
-        return fname == '__Gundo__' ? 'Gundo' :
-            \ fname == '__Gundo_Preview__' ? 'Gundo Preview' :
-            \ &filetype == 'gitv' ? 'Gitv' :
-            \ &filetype == 'git' ? 'Git' :
-            \ &filetype == 'gitcommit' ? 'fugitive' :
-            \ &filetype == 'unite' ? 'Unite' :
-            \ &filetype == 'vimshell' ? 'VimShell' :
-            \ &filetype == 'dictionary' ? 'Dictionary' :
-            \ winwidth('.') > 60 ? lightline#mode() : ''
+function! LightLineMode()
+  return &ft == 'unite' ? 'Unite' :
+        \ &ft == 'vimfiler' ? 'VimFiler' :
+        \ &ft == 'vimshell' ? 'VimShell' :
+        \ winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
 
-function! MyTabReadonly(n)
-    let buflist = tabpagebuflist(a:n)
-    let winnr = tabpagewinnr(a:n)
-    return gettabwinvar(a:n, winnr, '&readonly') ? '⭤' : ''
-endfunction
-
-function! MyTabFilename(n)
-    let buflist = tabpagebuflist(a:n)
-    let winnr = tabpagewinnr(a:n)
-    let fname = expand("#".buflist[winnr - 1].":t")
-    let ft = gettabwinvar(a:n, winnr, '&filetype')
-    return fname == '__Tagbar__' ? 'Tagbar' :
-          \ fname =~ '__Gundo' ? 'Gundo' :
-          \ &filetype == 'unite' ? 'Unite' :
-          \ &filetype == 'vimshell' ? 'VimShell' :
-          \ &filetype == 'dictionary' ? 'Dictionary' :
-        \ strlen(fname) ? fname : '[No Name]'
-endfunction
-
-
+" function! LightLineMode()
+"   return winwidth(0) > 60 ? lightline#mode() : ''
+" endfunction
