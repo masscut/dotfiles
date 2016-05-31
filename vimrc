@@ -5,9 +5,10 @@
 let s:is_windows = has('win16') || has('win32') || has('win64')
 
 if s:is_windows
-  set runtimepath^=$HOME/.vim
-  set runtimepath+=$HOME/.vim/after
+  set runtimepath^=~/.vim
+  set runtimepath+=~/.vim/after
   set encoding=utf-8
+  set shellslash
 endif
 
 set nocompatible 
