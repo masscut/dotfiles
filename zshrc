@@ -90,12 +90,6 @@ if [ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]; then
     setopt noclobber
 fi
 
-# docker
-eval $(docker-machine env default)
-if [[ -x `which docker` ]]; then
-    alias dl='docker ps -l -q'
-fi
-
 # nodebrew
 if [ -d $HOME/.nodebrew ]; then
     export PATH=$HOME/.nodebrew/current/bin:$PATH
