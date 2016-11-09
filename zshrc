@@ -22,7 +22,7 @@ case ${OSTYPE} in
             source /usr/local/share/zsh/site-functions/_aws
         fi
         # JAVA
-        export JAVA_HOME=`/usr/libexec/java_home`
+        #export JAVA_HOME=`/usr/libexec/java_home`
         ;;
     linux*) # for linux
         # rbenv
@@ -57,6 +57,11 @@ alias l='ls -CF'
 # user bin
 if [ -d $HOME/bin ]; then
     export PATH=$HOME/bin:$PATH
+fi
+
+# zsh-completions
+if [ -d /usr/local/share/zsh-completions/ ]; then
+    fpath=(/usr/local/share/zsh-completions $fpath)
 fi
 
 # less
