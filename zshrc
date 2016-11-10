@@ -50,6 +50,11 @@ case ${OSTYPE} in
         ;;
 esac
 
+# history
+HISTSIZE=10000
+HISTFILESIZE=20000
+HISTCONTROL=ignoreboth:ignoredups
+
 # some more ls aliases
 alias ll='ls -alF'
 alias la='ls -A'
