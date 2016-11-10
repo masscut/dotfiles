@@ -34,8 +34,7 @@ case ${OSTYPE} in
         if [ -f /usr/local/bin/aws_zsh_completer.sh ]; then
             source /usr/local/bin/aws_zsh_completer.sh
         fi
-        ;;
-    *) #for Unknown
+        # enable color support of ls and also add handy aliases
         if [ -x /usr/bin/dircolors ]; then
             test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
             alias ls='ls --color=auto'
@@ -46,6 +45,8 @@ case ${OSTYPE} in
             alias fgrep='fgrep --color=auto'
             alias egrep='egrep --color=auto'
         fi
+        ;;
+    *) #for Unknown
         ;;
 esac
 
@@ -61,12 +62,12 @@ fi
 
 # less
 if [ -f /usr/local/bin/src-hilite-lesspipe.sh ]; then
-    export LESS='-R'
+    export LESS='--no-init -R'
     export LESSOPEN='| /usr/local/bin/src-hilite-lesspipe.sh %s'
 fi
 
 # colordiff
-if [[ -x `which colordiff` ]]; then
+if [ -x `which colordiff` ]; then
     alias diff='colordiff -u'
 else
     alias diff='diff -u'
