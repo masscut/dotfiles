@@ -71,13 +71,6 @@ if [ -f /usr/local/bin/src-hilite-lesspipe.sh ]; then
     export LESSOPEN='| /usr/local/bin/src-hilite-lesspipe.sh %s'
 fi
 
-# colordiff
-if [ -x `which colordiff` ]; then
-    alias diff='colordiff -u'
-else
-    alias diff='diff -u'
-fi
-
 # Added by the Heroku Toolbelt
 if [ -d /usr/local/heroku ]; then
     export PATH="/usr/local/heroku/bin:$PATH"
