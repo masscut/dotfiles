@@ -35,7 +35,7 @@ case ${OSTYPE} in
             source /usr/local/bin/aws_zsh_completer.sh
         fi
         ;;
-    *)
+    *) #for Unknown
         if [ -x /usr/bin/dircolors ]; then
             test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
             alias ls='ls --color=auto'
@@ -57,11 +57,6 @@ alias l='ls -CF'
 # user bin
 if [ -d $HOME/bin ]; then
     export PATH=$HOME/bin:$PATH
-fi
-
-# zsh-completions
-if [ -d /usr/local/share/zsh-completions/ ]; then
-    fpath=(/usr/local/share/zsh-completions $fpath)
 fi
 
 # less
