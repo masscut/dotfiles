@@ -6,6 +6,9 @@ rm -f ~/.vimrc
 rm -f ~/.gvimrc
 rm -rf ~/.vim
 rm -f ~/.zshrc
+rm -f ~/.zpreztorc
+rm -f ~/.zprofile
+rm -f ~/.tmux.conf
 
 # Create symlink
 ln -s $PWD/vimrc ~/.vimrc
@@ -14,3 +17,4 @@ ln -s $PWD/vim ~/.vim
 ln -s $PWD/zshrc ~/.zshrc
 ln -s $PWD/zpreztorc ~/.zpreztorc
 ln -s $PWD/zprofile ~/.zprofile
+ln -s $PWD/tmux.conf ~/.tmux.conf
