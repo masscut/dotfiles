@@ -93,3 +93,8 @@ fi
 if [ -d $HOME/.nodebrew ]; then
     export PATH=$HOME/.nodebrew/current/bin:$PATH
 fi
+
+# tmux start up
+if [ $SHLVL = 1 ]; then
+    alias tmux="tmux attach || tmux new-session \; source-file ~/.tmux/session"
+fi

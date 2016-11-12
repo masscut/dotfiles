@@ -1,0 +1,5 @@
+### Layout of Window Number 1
+source-file ~/.tmux/window1
+
+### Layout of Window Number 2
+source-file ~/.tmux/window2
