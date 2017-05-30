@@ -3,6 +3,9 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
+# Set bindkey
+bindkey -v
+
 case ${OSTYPE} in
     darwin*) # for Mac
         # vim setteing
