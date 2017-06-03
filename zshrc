@@ -6,11 +6,16 @@ fi
 # Set bindkey
 bindkey -v
 
+# user bin
+if [ -d $HOME/bin ]; then
+    export PATH=$PATH:$HOME/bin
+fi
+
 case ${OSTYPE} in
     darwin*) # for Mac
         # vim setteing
         if [ -d /Applications/MacVim.app ]; then
-            PATH="/Applications/MacVim.app/Contents/MacOS:$PATH"
+            PATH="$PATH:/Applications/MacVim.app/Contents/MacOS"
 	        alias vim="mvim --remote-tab-silent"
 	        alias vi="vim"
 	        alias vimdiff="mvimdiff"
@@ -30,7 +35,7 @@ case ${OSTYPE} in
     linux*) # for linux
         # rbenv
         if [ -d $HOME/.rbenv ]; then
-            export PATH=$HOME/.rbenv/bin:$PATH
+            export PATH=$PATH:$HOME/.rbenv/bin
             eval "$(rbenv init - zsh)"
         fi
         # awscli 
@@ -63,11 +68,6 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 
-# user bin
-if [ -d $HOME/bin ]; then
-    export PATH=$HOME/bin:$PATH
-fi
-
 # less
 if [ -f /usr/local/bin/src-hilite-lesspipe.sh ]; then
     export LESS='--no-init -R'
@@ -97,7 +97,7 @@ if [ -d $HOME/.nodebrew ]; then
     export PATH=$HOME/.nodebrew/current/bin:$PATH
 fi
 
-# tmux start up
-if [ $SHLVL = 1 ]; then
-    alias tmux="tmux attach || tmux new-session \; source-file ~/.tmux/session"
-fi
+## tmux start up
+#if [ $SHLVL = 1 ]; then
+#    alias tmux="tmux attach || tmux new-session \; source-file ~/.tmux/session"
+#fi
