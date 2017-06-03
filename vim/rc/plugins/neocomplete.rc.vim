@@ -4,16 +4,12 @@
 
 let g:neocomplete#disable_auto_complete = 0
 
-let g:neocomplete#enable_insert_char_pre = 0
-
 " Use smartcase
 let g:neocomplete#enable_smart_case = 1
 
 " Use fuzzy completion.
 let g:neocomplete#enable_fuzzy_completion = 1
 
-" Set minimum syntax keyword length.
-let g:neocomplete#sources#syntax#min_keyword_length = 3
 " Set auto completion length.
 let g:neocomplete#auto_completion_start_length = 2 
 " Set manual completion length.
@@ -21,35 +17,22 @@ let g:neocomplete#manual_completion_start_length = 0
 " Set minimum keyword length.
 let g:neocomplete#min_keyword_length = 3   
 
-" Define dictionary.
-let g:neocomplete#sources#dictionary#dictionaries = {
-    \ 'default' : '',
-    \ 'vimshell' : $CACHE.'/vimshell/command-history',
-    \ }
-
 " Insert delimiter automatically; /(filename) or #(Vim script)
 let g:neocomplete#enable_auto_delimiter = 1
-let g:neocomplete#max_list = 100
-"let g:neocomplete#force_overwrite_completefunc = 1
 
 if !exists('g:neocomplete#sources#omni#input_patterns')
   let g:neocomplete#sources#omni#input_patterns = {}
 endif
-if !exists('g:neocomplete#sources#omni#functions')
-  let g:neocomplete#sources#omni#functions = {}
-endif
-if !exists('g:neocomplete#force_omni_input_patterns')
-  let g:neocomplete#force_omni_input_patterns = {}
-endif
-let g:neocomplete#enable_auto_close_preview = 1
 
-let g:neocomplete#force_omni_input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::\w*'
+let g:neocomplete#sources#omni#input_patterns.python = '[^. *\t]\.\w*\|\h\w*'
 
-" Define keyword.
+" Define keyword pattern.
 if !exists('g:neocomplete#keyword_patterns')
-    let g:neocomplete#keyword_patterns = {}
+  let g:neocomplete#keyword_patterns = {}
 endif
-let g:neocomplete#keyword_patterns._ = '\h\w*'
+let g:neocomplete#keyword_patterns._ = '\h\k*'
+
+let g:neocomplete#enable_auto_close_preview = 1
 
 " mappings.
 " <C-f>, <C-b>: page move.
