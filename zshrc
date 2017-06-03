@@ -15,7 +15,7 @@ case ${OSTYPE} in
     darwin*) # for Mac
         # vim setteing
         if [ -d /Applications/MacVim.app ]; then
-            PATH="$PATH:/Applications/MacVim.app/Contents/MacOS"
+            PATH="$PATH:/Applications/MacVim.app/Contents/bin"
 	        alias vim="mvim --remote-tab-silent"
 	        alias vi="vim"
 	        alias vimdiff="mvimdiff"
