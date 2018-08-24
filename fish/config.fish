@@ -26,15 +26,10 @@ case linux # for linux
 case '*' #for Unknown
 end
 
-# history
-#HISTSIZE=10000
-#HISTFILESIZE=20000
-#HISTCONTROL=ignoreboth:ignoredups
-
 # some more ls aliases
-#alias ll 'ls -alF'
-#alias la 'ls -A'
-#alias l 'ls -CF'
+alias ll 'ls -alF'
+alias la 'ls -aF'
+alias l 'ls -CF'
 
 # less
 if [ -f /usr/local/bin/src-hilite-lesspipe.sh ];
