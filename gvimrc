@@ -9,11 +9,11 @@ set t_Co=256
 colorscheme wombat256mod
 " Font {{{2
 if s:is_windows
-	set guifontwide=MS_Gothic:h10
-	set guifont=Consolas\ for\ Powerline\ FixedD:h10
+	set guifontwide=MS_Gothic:h12
+	set guifont=Sauce\ Code\ Pro\ Nerd\ Font\ Complete:h12 
 else
-	set guifontwide=Osaka:h11
-	set guifont=Consolas\ for\ Powerline:h11 
+	set guifontwide=Osaka:h12
+	set guifont=Sauce\ Code\ Pro\ Nerd\ Font\ Complete:h12 
 endif
 set antialias
 " Mouse {{{2
