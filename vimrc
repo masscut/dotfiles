@@ -1,17 +1,11 @@
 " ------------------------------------------------------------------------------
-" vimrc
+" vimrc:
 "
 
-let s:is_windows = has('win16') || has('win32') || has('win64')
-
-if s:is_windows
-  set runtimepath^=~/.vim
-  set runtimepath+=~/.vim/after
-  set encoding=utf-8
-  set shellslash
+if &compatible
+  set nocompatible
 endif
 
-set nocompatible 
 filetype off
 
 " release autogroup in MyAutoCmd
@@ -19,41 +13,11 @@ augroup MyAutoCmd
   autocmd!
 augroup END
 
-let $CACHE = expand('~/.cache')
-
-if !isdirectory(expand($CACHE))
-  call mkdir(expand($CACHE), 'p')
+if has('vim_starting')
+  source ~/.vim/rc/init.rc.vim
 endif
 
-" Load dein.
-let s:dein_dir = finddir('dein.vim', '.;')
-if s:dein_dir != '' || &runtimepath !~ '/dein.vim'
-  if s:dein_dir == '' && &runtimepath !~ '/dein.vim'
-    let s:dein_dir = expand('$CACHE/dein') . '/repos/github.com/Shougo/dein.vim'
-    if !isdirectory(s:dein_dir)
-      execute '!git clone https://github.com/Shougo/dein.vim' s:dein_dir
-    endif
-  endif
-  execute ' set runtimepath^=' . substitute(fnamemodify(s:dein_dir, ':p') , '/$', '', '')
-endif
-
-let s:path = expand('$CACHE/dein')
-if dein#load_state(s:path)
-  call dein#begin(s:path, [expand('<sfile>')] + split(glob('~/.vim/rc/*.toml'), '\n'))
-
-  call dein#load_toml('~/.vim/rc/dein.toml', {'lazy': 0})
-  call dein#load_toml('~/.vim/rc/deinlazy.toml', {'lazy' : 1})
-
-  call dein#disable('neobundle.vim')
-  call dein#disable('neopairs.vim')
-
-  call dein#end()
-  call dein#save_state()
-endif
-
-if dein#check_install()
-  call dein#install()
-endif
+source ~/.vim/rc/dein.rc.vim
 
 if !has('vim_starting')
   call dein#call_hook('source')
@@ -66,6 +30,10 @@ endif
 source ~/.vim/rc/edit.rc.vim
 source ~/.vim/rc/filetype.rc.vim
 source ~/.vim/rc/mappings.rc.vim
+
+if IsWindows()
+  source ~/.vim/rc/windows.rc.vim
+endif
 
 " vim:set foldmethod=marker:
 " vim:set foldlevel=1:
