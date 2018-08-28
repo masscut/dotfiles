@@ -13,7 +13,7 @@ case Darwin # for Mac
         alias vimdiff "mvimdiff"
         alias view "mview"
     end
-case linux # for linux
+case Linux # for linux
 #    # enable color support of ls and also add handy aliases
 #    if [ -x /usr/bin/dircolors ]; then
 #        test -r ~/.dircolors; and eval (dircolors -b ~/.dircolors); or eval (dircolors -b)
@@ -27,9 +27,17 @@ case '*' #for Unknown
 end
 
 # some more ls aliases
-alias ll 'ls -alF'
-alias la 'ls -aF'
-alias l 'ls -CF'
+function ll 
+	ls -alF $argv;
+end
+
+function la
+    ls -aF $argv;
+end
+
+function l
+    ls -CF $argv
+end
 
 # less
 if [ -f /usr/local/bin/src-hilite-lesspipe.sh ];
