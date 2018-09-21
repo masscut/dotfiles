@@ -72,6 +72,5 @@ end
 # The next line enables shell command completion for gcloud.
 #if [ -f "$HOME/bin/google-cloud-sdk/completion.zsh.inc" ]; then source "$HOME/bin/google-cloud-sdk/completion.zsh.inc"; end
 
-function fish_user_key_bindings
-  bind \cr 'peco_select_history (commandline -b)'
-end
+# fzf
+set -U FZF_LEGACY_KEYBINDINGS 0
