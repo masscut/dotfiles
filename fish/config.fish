@@ -8,10 +8,21 @@ case Darwin # for Mac
     # vim setting
     if [ -d /Applications/MacVim.app ]
         set PATH $PATH /Applications/MacVim.app/Contents/bin
-        alias vim "mvim --remote-tab-silent"
-        alias vi "vim"
-        alias vimdiff "mvimdiff"
-        alias view "mview"
+        function vim
+            mvim --remote-tab-silent $argv
+        end
+        
+        function vi
+            vim $argv
+        end
+
+        function vimdiff
+            mvimdiff $argv
+        end
+
+        function view
+            mview $argv
+        end
     end
 case Linux # for linux
 #    # enable color support of ls and also add handy aliases
@@ -28,11 +39,11 @@ end
 
 # some more ls aliases
 function ll 
-	ls -alF $argv;
+    ls -alF $argv
 end
 
 function la
-    ls -aF $argv;
+    ls -aF $argv
 end
 
 function l
@@ -60,3 +71,7 @@ end
 
 # The next line enables shell command completion for gcloud.
 #if [ -f "$HOME/bin/google-cloud-sdk/completion.zsh.inc" ]; then source "$HOME/bin/google-cloud-sdk/completion.zsh.inc"; end
+
+function fish_user_key_bindings
+  bind \cr 'peco_select_history (commandline -b)'
+end
