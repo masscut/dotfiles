@@ -28,19 +28,6 @@ case Linux # for linux
 case '*' #for Unknown
 end
 
-# some more ls aliases
-#function ll 
-#    ls -alF $argv
-#end
-
-#function la
-#    ls -aF $argv
-#end
-
-#function l
-#    ls -CF $argv
-#end
-
 # less
 if [ -f /usr/local/bin/src-hilite-lesspipe.sh ];
     set -x LESS '--no-init --shift 4 --LONG-PROMPT --quit-if-one-screen -R'
