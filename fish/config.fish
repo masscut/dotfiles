@@ -9,7 +9,7 @@ case Darwin # for Mac
     if [ -d /Applications/MacVim.app ]
         set PATH $PATH /Applications/MacVim.app/Contents/bin
         function vim
-            mvim --remote-tab-silent $argv
+            command mvim --remote-tab-silent $argv
         end
         
         function vi
@@ -17,42 +17,33 @@ case Darwin # for Mac
         end
 
         function vimdiff
-            mvimdiff $argv
+            command mvimdiff $argv
         end
 
         function view
-            mview $argv
+            command mview $argv
         end
     end
 case Linux # for linux
-#    # enable color support of ls and also add handy aliases
-#    if [ -x /usr/bin/dircolors ]; then
-#        test -r ~/.dircolors; and eval (dircolors -b ~/.dircolors); or eval (dircolors -b)
-#        alias ls='ls --color=auto'
-#
-#        alias grep='grep --color=auto'
-#        alias fgrep='fgrep --color=auto'
-#        alias egrep='egrep --color=auto'
-#    end
 case '*' #for Unknown
 end
 
 # some more ls aliases
-function ll 
-    ls -alF $argv
-end
+#function ll 
+#    ls -alF $argv
+#end
 
-function la
-    ls -aF $argv
-end
+#function la
+#    ls -aF $argv
+#end
 
-function l
-    ls -CF $argv
-end
+#function l
+#    ls -CF $argv
+#end
 
 # less
 if [ -f /usr/local/bin/src-hilite-lesspipe.sh ];
-    set -x LESS '--no-init --quit-if-one-screen -R'
+    set -x LESS '--no-init --shift 4 --LONG-PROMPT --quit-if-one-screen -R'
     set -x LESSOPEN '| /usr/local/bin/src-hilite-lesspipe.sh %s'
 end
 
