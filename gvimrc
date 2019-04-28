@@ -9,9 +9,9 @@ set t_Co=256
 colorscheme wombat256mod
 " Font {{{2
 if s:is_windows
-	set guifont=Sauce\ Code\ Pro\ Nerd\ Font\ Complete:h12 
+	set guifont=Source\ Code\ Pro\ for\ Powerline:h12 
 else
-	set guifont=Sauce\ Code\ Pro\ Nerd\ Font\ Complete:h12 
+	set guifont=Source\ Code\ Pro\ for\ Powerline:h12 
 endif
 set antialias
 " Mouse {{{2
