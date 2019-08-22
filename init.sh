@@ -5,18 +5,13 @@ PWD=`pwd`
 rm -f ~/.vimrc
 rm -f ~/.gvimrc
 rm -rf ~/.vim
-rm -f ~/.zshrc
-rm -f ~/.zpreztorc
-rm -f ~/.zprofile
 rm -f ~/.tmux.conf
 rm -rf ~/.tmux
 
 # Create symlink
-ln -s $PWD/vimrc ~/.vimrc
-ln -s $PWD/gvimrc ~/.gvimrc
-ln -s $PWD/vim ~/.vim
-ln -s $PWD/zshrc ~/.zshrc
-ln -s $PWD/zpreztorc ~/.zpreztorc
-ln -s $PWD/zprofile ~/.zprofile
-ln -s $PWD/tmux.conf ~/.tmux.conf
-ln -s $PWD/tmux ~/.tmux
+ln -sf $PWD/vimrc ~/.vimrc
+ln -sf $PWD/gvimrc ~/.gvimrc
+ln -sf $PWD/vim ~/.vim
+ln -sf $PWD/tmux.conf ~/.tmux.conf
+ln -sfs $PWD/tmux ~/.tmux
+ln -sf $PWD/peco  ~/.config/pecs
