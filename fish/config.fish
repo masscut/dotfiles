@@ -52,3 +52,6 @@ end
 
 # fzf
 set -U FZF_LEGACY_KEYBINDINGS 0
+
+# fish-ghq
+set GHQ_SELECTOR peco
