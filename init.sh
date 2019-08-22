@@ -14,4 +14,4 @@ ln -sf $PWD/gvimrc ~/.gvimrc
 ln -sf $PWD/vim ~/.vim
 ln -sf $PWD/tmux.conf ~/.tmux.conf
 ln -sfs $PWD/tmux ~/.tmux
-ln -sf $PWD/peco  ~/.config/pecs
+ln -sf $PWD/peco  ~/.config/peco
