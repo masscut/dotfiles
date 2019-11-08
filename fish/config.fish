@@ -39,19 +39,20 @@ if [ -x /usr/local/bin/aws_completer ];
     complete --command aws --no-files --arguments '(begin; set --local --export COMP_SHELL fish; set --local --export COMP_LINE (commandline); aws_completer | sed \'s/ $//\'; end)'
 end
 
-# tmux start up
-#if [ $SHLVL = 1 ]; then
-#    alias tmux="tmux attach || tmux new-session \; source-file ~/.tmux/session"
-#fi
-
-# The next line updates PATH for the Google Cloud SDK.
-#if [ -f "$HOME/bin/google-cloud-sdk/path.zsh.inc" ]; then source "$HOME/bin/google-cloud-sdk/path.zsh.inc"; end
-
-# The next line enables shell command completion for gcloud.
-#if [ -f "$HOME/bin/google-cloud-sdk/completion.zsh.inc" ]; then source "$HOME/bin/google-cloud-sdk/completion.zsh.inc"; end
+# gcloud
+if [ -f /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.fish.inc ];
+    source /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.fish.inc
+end
 
 # fzf
 set -U FZF_LEGACY_KEYBINDINGS 0
 
 # fish-ghq
 set GHQ_SELECTOR peco
+
+# tmux start up
+#if [ $SHLVL = 1 ]; then
+#    alias tmux="tmux attach || tmux new-session \; source-file ~/.tmux/session"
+#fi
+
+
