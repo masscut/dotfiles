@@ -6,6 +6,7 @@ This is my dotfiles.
 - execute init.sh
 - install fisherman
 - install fish plug-in
+- install google-cloud-sdk-fish-completion
 
 ## fish plug-in
 - daenney/pyenv
