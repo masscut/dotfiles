@@ -16,4 +16,5 @@ ln -sf $PWD/tmux.conf ~/.tmux.conf
 ln -sfs $PWD/tmux ~/.tmux
 ln -sf $PWD/fish/config.fish  ~/.config/fish/config.fish
 ln -sf $PWD/fish/conf.d/direnv.fish  ~/.config/fish/conf.d/direnv.fish
+ln -sf $PWD/fish/conf.d/peco.fish  ~/.config/fish/conf.d/peco.fish
 ln -sf $PWD/peco  ~/.config/peco
