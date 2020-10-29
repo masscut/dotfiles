@@ -14,6 +14,7 @@ curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fi
 # ln -sf $PWD/vim ~/.vim
 ln -sf $PWD/fish/config.fish  ~/.config/fish/config.fish
 ln -sf $PWD/fish/fishfile  ~/.config/fish/fishfile
+ln -sf $PWD/fish/fish_variables  ~/.config/fish/fish_variables
 ln -sf $PWD/fish/conf.d/peco.fish  ~/.config/fish/conf.d/peco.fish
 ln -sf $PWD/peco  ~/.config/peco
 
